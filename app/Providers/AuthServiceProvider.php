@@ -32,11 +32,21 @@ class AuthServiceProvider extends ServiceProvider
         Passport::tokensCan([
 
             //ADMIN SCOPE
-            'add_currency' => 'Add currency',
+            'admin_add_admin' => 'Add admin',
+            'admin_update_admin' => 'Update admin',
+            'admin_view_admins' => 'View admins',
 
+            'admin_add_merchant' => 'Add merchant',
+            'admin_update_merchant' => 'Update merchant',
+            'admin_view_merchant' => 'View merchants',
+
+            'admin_view_redemptions' => 'View redemptions',
+
+            //admin_add_admin admin_update_admin admin_view_admins admin_add_merchant admin_update_merchant admin_view_merchant admin_view_redemptions
             
             //MERCHANT SCOPES
-            'worker_add' => 'Add customer',
+            'merchant_view_redemptions' => 'View redemptions',
+            'merchant_accept_redemptions' => 'Accept redemptions',
 
         ]);
         //

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+//Route::post('/v1/admin/register', [AdminController::class, 'register']);
+Route::post('/v1/admin/register', 'Api\v1\AdminController@register');
+
+Route::post('/v1/admin/login', 'Api\v1\AdminController@login');
+
+Route::middleware(['auth:api', 'scope:admin_add_admin'])->post('/v1/admin/administrators/add', 'Api\v1\AdminController@add_admin');
+
+Route::middleware(['auth:api', 'scope:admin_view_admins'])->get('/v1/admin/administrators/list', 'Api\v1\AdminController@get_all_admins');
+
+Route::middleware(['auth:api', 'scope:admin_view_admins'])->get('/v1/admin/administrators/get', 'Api\v1\AdminController@get_one_admin');
+
+Route::middleware(['auth:api', 'scope:admin_update_admin'])->post('/v1/admin/administrators/edit', 'Api\v1\AdminController@edit_admin');
+

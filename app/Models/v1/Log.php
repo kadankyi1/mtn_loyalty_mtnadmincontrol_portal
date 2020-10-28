@@ -1,32 +1,35 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\v1;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Log extends Model
 {
-    use HasFactory, Notifiable;
 
+    use Notifiable;
 
     /**
-     * The table associated with the model.
+     * The primary key associated with the table.
      *
      * @var string
      */
-    protected $table = 'administrators';
+    protected $primaryKey = 'log_id';
+
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'user_type', 
+        'user_id_or_phone_or_email',
+        'log_title', 
+        'log_description',
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -35,8 +38,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'user_id_or_phone_or_email', 'remember_token',
     ];
 
     /**
@@ -47,4 +49,5 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    //
 }

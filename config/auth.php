@@ -38,13 +38,18 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'administrator',
         ],
 
         'api' => [
             'driver' => 'passport',
             'provider' => 'administrator',
             'hash' => false,
+        ],
+
+        'administrator' => [
+            'driver' => 'passport',
+            'provider' => 'administrator',
         ],
 
         'merchant' => [
@@ -71,9 +76,10 @@ return [
     */
 
     'providers' => [
+        
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\User::class,
         ],
 
         'administrator' => [
