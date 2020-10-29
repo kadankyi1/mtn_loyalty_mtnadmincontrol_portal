@@ -29,3 +29,9 @@ Route::middleware(['auth:api', 'scope:admin_view_admins'])->get('/v1/admin/admin
 
 Route::middleware(['auth:api', 'scope:admin_update_admin'])->post('/v1/admin/administrators/edit', 'Api\v1\AdminController@edit_admin');
 
+Route::middleware(['auth:api', 'scope:admin_add_merchant'])->post('/v1/admin/merchants/add', 'Api\v1\AdminController@add_merchant');
+
+Route::middleware(['auth:api', 'scope:admin_update_merchant'])->post('/v1/admin/merchants/edit', 'Api\v1\AdminController@edit_merchant');
+
+Route::middleware(['auth:api', 'scope:admin_view_merchant'])->get('/v1/admin/merchants/get', 'Api\v1\AdminController@search_one_merchant');
+

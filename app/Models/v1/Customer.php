@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Models\v1;
+namespace App\Models;
 
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Merchant extends Authenticatable
+class Customer extends Model
 {
-
     use HasApiTokens, Notifiable;
 
     /**
@@ -16,14 +16,14 @@ class Merchant extends Authenticatable
      *
      * @var string
      */
-    protected $table = 'merchants';
+    protected $table = 'customers';
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'merchant_id';
+    protected $primaryKey = 'customer_id';
 
     /**
      * The attributes that are mass assignable.
@@ -31,16 +31,11 @@ class Merchant extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'merchant_id', 
-        'merchant_name', 
-        'merchant_location', 
-        'merchant_scope', 
-        'merchant_phone_number',
-        'merchant_email',
-        'merchant_pin',
-        'password',
-        'merchant_flagged',
-        'creator_id',
+        'customer_id', 
+        'customer_phone_number',
+        'points',
+        'customer_pin',
+        'customer_flagged',
         'created_at',
         'updated_at',
     ];
@@ -51,8 +46,7 @@ class Merchant extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'merchant_pin', 'remember_token',
-        'password', 'remember_token',
+        'customer_pin', 'remember_token',
     ];
 
     /**

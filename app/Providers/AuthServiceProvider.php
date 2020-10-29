@@ -47,7 +47,7 @@ class AuthServiceProvider extends ServiceProvider
             //MERCHANT SCOPES
             'merchant_view_redemptions' => 'View redemptions',
             'merchant_accept_redemptions' => 'Accept redemptions',
-
+            //merchant_view_redemptions merchant_accept_redemptions
         ]);
         //
     }

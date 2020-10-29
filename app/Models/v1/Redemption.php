@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Models\v1;
+namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 
-class Log extends Model
+class Redemption extends Model
 {
-
-    use Notifiable;
+    
+    use HasApiTokens, Notifiable;
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'log_id';
-
+    protected $primaryKey = 'redemption_id';
 
     /**
      * The attributes that are mass assignable.
@@ -24,10 +23,13 @@ class Log extends Model
      * @var array
      */
     protected $fillable = [
-        'user_type', 
-        'user_id_or_phone_or_email',
-        'log_title', 
-        'log_description',
+        'redemption_id', 
+        'merchant_id', 
+        'customer_id', 
+        'customer_phone', 
+        'points_to_one_cedi_rate_used',
+        'redeemed_points',
+        'redemption_cedi_equivalent_paid',
         'created_at',
         'updated_at',
     ];
@@ -38,7 +40,6 @@ class Log extends Model
      * @var array
      */
     protected $hidden = [
-        'user_id_or_phone_or_email', 'remember_token',
     ];
 
     /**
