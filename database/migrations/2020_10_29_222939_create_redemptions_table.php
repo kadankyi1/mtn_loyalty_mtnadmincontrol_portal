@@ -20,9 +20,16 @@ class CreateRedemptionsTable extends Migration
             $table->unsignedBigInteger('points_to_one_cedi_rate_used');
             $table->unsignedBigInteger('redeemed_points');
             $table->string('redemption_cedi_equivalent_paid', 255);
+            $table->decimal('merchant_settled_amt', 4, 2);
             $table->timestamps();
         });
 
+        Schema::table('redemptions', function (Blueprint $table) {
+            $table->unsignedBigInteger('customer_id');
+            $table->foreign('customer_id')->references('customer_id')->on('customers');
+            $table->unsignedBigInteger('merchant_id');
+            $table->foreign('merchant_id')->references('merchant_id')->on('merchants');
+        });
     }
 
     /**

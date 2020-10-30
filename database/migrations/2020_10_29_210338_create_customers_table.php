@@ -16,19 +16,14 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->bigIncrements('customer_id');
+            $table->string('customer_name', 255);
             $table->string('customer_phone_number', 255)->unique();
-            $table->unsignedBigInteger('points');
+            $table->unsignedBigInteger('points')->default('0');
             $table->string('customer_pin', 255);
             $table->boolean('customer_flagged');
             $table->timestamps();
         });
         
-        Schema::table('redemptions', function (Blueprint $table) {
-            $table->unsignedBigInteger('customer_id');
-            $table->foreign('customer_id')->references('customer_id')->on('customers');
-            $table->unsignedBigInteger('merchant_id');
-            $table->foreign('merchant_id')->references('merchant_id')->on('merchants');
-        });
     }
 
     /**

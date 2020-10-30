@@ -535,90 +535,50 @@ public function search_one_merchant(Request $request)
 }
 
 
-public function add_customer(Request $request)
+/*
+|--------------------------------------------------------------------------
+|--------------------------------------------------------------------------
+| THIS FUNCTION GETS SEARCHES FOR A LIST OF BUREAUS
+|--------------------------------------------------------------------------
+|--------------------------------------------------------------------------
+|
+*/
+public function get_merchant_redemptions(Request $request)
 {
     $log_controller = new LogController();
 
     if (!Auth::guard('api')->check()) {
         return response(["status" => "fail", "message" => "Permission Denied. Please log out and login again"]);
     }
-
-    if (!$request->user()->tokenCan('admin_add_admin')) {
-        $log_controller->save_log("administrator", auth()->user()->admin_id, "Administrators|Admin", "Permission denined for trying to add customer");
+    
+    if (!$request->user()->tokenCan('admin_view_redemptions')) {
+        $log_controller->save_log("administrator", auth()->user()->admin_id, "Redemptions|Admin", "Permission denined for trying to get merchants redemptions");
         return response(["status" => "fail", "message" => "Permission Denied. Please log out and login again"]);
     }
 
     if (auth()->user()->admin_flagged) {
-        $log_controller->save_log("administrator", auth()->user()->admin_id, "Administrators|Admin", "Adding administrator failed because admin is flagged");
+        $log_controller->save_log("administrator", auth()->user()->admin_id, "Redemptions|Admin", "Getting merchants redemptions failed because admin is flagged");
         $request->user()->token()->revoke();
         return response(["status" => "fail", "message" => "Account access restricted"]);
     }
 
-    if (!Hash::check($request->admin_pin, auth()->user()->admin_pin)) {
-        $log_controller->save_log("administrator", auth()->user()->admin_id, "Administrators|Admin", "Addming administrator failed because of incorrect pin");
-        return response(["status" => "fail", "message" => "Incorrect pin."]);
-    }
 
-    $validatedData = $request->validate([
-        "admin_surname" => "bail|required|max:55",
-        "admin_firstname" => "bail|required|max:55",
-        "admin_othernames" => "bail|max:55",
-        "admin_phone_number" => "bail|required|regex:/(0)[0-9]{9}/|min:10|max:10",
-        "admin_email" => "bail|email|required|max:100",
-        "admin_add_admin" => "bail|nullable|regex:(admin_add_admin)",
-        "admin_update_admin" => "bail|nullable|regex:(admin_update_admin)",
-        "admin_view_admins" => "bail|nullable|regex:(admin_view_admins)",
-        "admin_add_merchant" => "bail|nullable|regex:(admin_add_merchant)",
-        "admin_update_merchant" => "bail|nullable|regex:(admin_update_merchant)",
-        "admin_view_merchant" => "bail|nullable|regex:(admin_view_merchant)",
-        "admin_view_redemptions" => "bail|nullable|regex:(admin_view_redemptions)",
-        "admin_pin" => "bail|required|min:4|max:8",
+    $request->validate([
+        "merchant_id" => "bail|required",
     ]);
 
 
+    $where_array = array(
+        ['merchants.merchant_id', '=',  $request->merchant_id]
+    ); 
 
-    $admin = Administrator::where('admin_phone_number', $request->admin_phone_number)->first();
-    $admin2 = Administrator::where('admin_email', $request->admin_email)->first();
+    $redemptions = DB::table('merchants')
+    ->select('merchants.*')
+    ->where($where_array)
+    ->simplePaginate(50);
 
-    if ($admin != null && $admin->admin_phone_number == $request->admin_phone_number) {
-        return response(["status" => "fail", "message" => "The phone number is registered to another administrator."]);
-    } else if ($admin2 != null && $admin2->admin_email == $request->admin_email) {
-        return response(["status" => "fail", "message" => "The email address is registered to another administrator."]);
-    } else {
-        $validatedData["admin_pin"] = Hash::make(substr($request->admin_phone_number,-4));
-        $validatedData["password"] = bcrypt($request->admin_phone_number);
-        $validatedData["admin_flagged"] = false;
     
-        $validatedData["admin_scope"] = "";
-
-        if(trim($request->admin_add_admin) != ""){
-            $validatedData["admin_scope"] = $validatedData["admin_scope"] . $request->admin_add_admin;
-        }
-        if(trim($request->admin_update_admin) != ""){
-            $validatedData["admin_scope"] = $validatedData["admin_scope"]  .  " " .  $request->admin_update_admin;
-        }
-        if(trim($request->admin_view_admins) != ""){
-            $validatedData["admin_scope"] = $validatedData["admin_scope"]  .  " " .  $request->admin_view_admins;
-        }
-        if(trim($request->admin_add_merchant) != ""){
-            $validatedData["admin_scope"] = $validatedData["admin_scope"]  .  " " .  $request->admin_add_merchant;
-        }
-        if(trim($request->admin_update_merchant) != ""){
-            $validatedData["admin_scope"] = $validatedData["admin_scope"]  .  " " .  $request->admin_update_merchant;
-        }
-        if(trim($request->admin_view_merchant) != ""){
-            $validatedData["admin_scope"] = $validatedData["admin_scope"]  .  " " .  $request->admin_view_merchant;
-        }
-        if(trim($request->admin_view_redemptions) != ""){
-            $validatedData["admin_scope"] = $validatedData["admin_view_redemptions"]  .  " " .  $request->admin_view_redemptions;
-        }
-    
-    
-        $administrator = Administrator::create($validatedData);
-        return response(["status" => "success", "message" => "Administrator added successsfully."]);
-    }
-
-
+    return response(["status" => "success", "message" => "Operation successful", "data" => $redemptions]);
 }
 
 

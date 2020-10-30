@@ -35,3 +35,6 @@ Route::middleware(['auth:api', 'scope:admin_update_merchant'])->post('/v1/admin/
 
 Route::middleware(['auth:api', 'scope:admin_view_merchant'])->get('/v1/admin/merchants/get', 'Api\v1\AdminController@search_one_merchant');
 
+Route::middleware(['auth:api', 'scope:admin_view_redemptions'])->get('/v1/admin/redemptions/get', 'Api\v1\AdminController@get_merchant_redemptions');
+
+Route::post('/v1/customer/register', 'Api\v1\CustomerController@register');
