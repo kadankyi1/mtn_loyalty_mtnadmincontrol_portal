@@ -20,7 +20,8 @@ class CreateRedemptionsTable extends Migration
             $table->unsignedBigInteger('points_to_one_cedi_rate_used');
             $table->unsignedBigInteger('redeemed_points');
             $table->string('redemption_cedi_equivalent_paid', 255);
-            $table->decimal('merchant_settled_amt', 4, 2);
+            $table->boolean('vendor_paid_fiat');
+            $table->boolean('redemption_flagged')->default('0');
             $table->timestamps();
         });
 

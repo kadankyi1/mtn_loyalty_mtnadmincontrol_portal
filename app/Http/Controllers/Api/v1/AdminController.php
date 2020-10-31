@@ -562,25 +562,84 @@ public function get_merchant_redemptions(Request $request)
         return response(["status" => "fail", "message" => "Account access restricted"]);
     }
 
-
     $request->validate([
         "merchant_id" => "bail|required",
     ]);
 
-
     $where_array = array(
-        ['merchants.merchant_id', '=',  $request->merchant_id]
+        ['merchant_id', '=',  $request->merchant_id],
+        ['vendor_paid_fiat', '=',  1],
     ); 
 
-    $redemptions = DB::table('merchants')
-    ->select('merchants.*')
+    $unpaid_redemptions = DB::table('redemptions')
+    ->selectRaw('count(*)')
+    ->where($where_array)
+    ->get();
+
+    $where_array = array(
+        ['merchant_id', '=',  $request->merchant_id]
+    ); 
+
+
+    $redemptions = DB::table('redemptions')
+    ->select('redemptions.*')
     ->where($where_array)
     ->simplePaginate(50);
 
     
-    return response(["status" => "success", "message" => "Operation successful", "data" => $redemptions]);
+    return response(["status" => "success", "message" => "Operation successful", "data" => $redemptions, "unpaid" => $unpaid_redemptions]);
 }
 
+
+/*
+|--------------------------------------------------------------------------
+|--------------------------------------------------------------------------
+| THIS FUNCTION GETS SEARCHES FOR A LIST OF BUREAUS
+|--------------------------------------------------------------------------
+|--------------------------------------------------------------------------
+|
+*/
+public function get_dashboard(Request $request)
+{
+    $log_controller = new LogController();
+
+    if (!Auth::guard('api')->check()) {
+        return response(["status" => "fail", "message" => "Permission Denied. Please log out and login again"]);
+    }
+
+    if (auth()->user()->admin_flagged) {
+        $log_controller->save_log("administrator", auth()->user()->admin_id, "Dashboard|Admin", "Getting dashboard failed because admin is flagged");
+        $request->user()->token()->revoke();
+        return response(["status" => "fail", "message" => "Account access restricted"]);
+    }
+
+    $where_array = array(
+        ['vendor_paid_fiat', '=',  0],
+    ); 
+
+    $unpaid_redemptions = DB::table('redemptions')
+    ->selectRaw('count(*)')
+    ->where($where_array)
+    ->get();
+
+    $cedis_sum_unpaid_redemptions = DB::table('redemptions')
+    ->where($where_array)
+    ->sum('redemptions.redemption_cedi_equivalent_paid');
+
+    $al_merchants = DB::table('merchants')
+    ->selectRaw('count(*)')
+    ->get();
+
+
+    
+    return response([
+        "status" => "success", 
+        "message" => "Operation successful", 
+        "merchants" => $al_merchants, 
+        "unpaid" => $unpaid_redemptions, 
+        "sum_unpaid" => $cedis_sum_unpaid_redemptions
+        ]);
+}
 
 
 }
