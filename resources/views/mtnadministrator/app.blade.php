@@ -66,8 +66,8 @@
                             <li class="treeview <?php if(isset($active_page) && $active_page == 'Merchants'){ echo 'active'; } ?>">
                                 <a href="javascript:void(0)"><i class="fa fa-building-o"></i><span>Merchants</span> <i class="fa fa-angle-right"></i></a>
                                 <ul class="treeview-menu">
-                                    <li><a href="<?php echo url('/'); ?>/merchants/add">Add</a></li>
-                                    <li><a href="<?php echo url('/'); ?>/merchants/list">View</a></li>
+                                    <li><a href="<?php echo url('/'); ?>/admin/merchants/add">Add</a></li>
+                                    <li><a href="<?php echo url('/'); ?>/admin/merchants/search">Find</a></li>
                                 </ul>
                             </li>
                             <li class="treeview <?php if(isset($active_page) && $active_page == 'Administrators'){ echo 'active'; } ?>">

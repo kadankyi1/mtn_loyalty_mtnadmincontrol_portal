@@ -4,14 +4,14 @@
 
 ****************************************/
 
-var hostweb = "http://mtnloyaltyadmin";
+var hostweb = "http://mtncustomerloyalty";
 var show_logging_in_console = "true"
 
 // LOGIN PAGE URL
 var web_login_url = `${hostweb}/`;
 
 // INDEX PAGE URL
-var web_home_url = `${hostweb}/user/home`;
+var web_home_url = `${hostweb}/admin/dashboard`;
 
 /****************************************
     
@@ -19,11 +19,11 @@ var web_home_url = `${hostweb}/user/home`;
 
 ****************************************/
 
-var host_api = "http://35.239.52.33";
+var host_api = "http://mtncustomerloyalty";
 
 // LOGIN PAGE URLS
-var api_login_url = `${host_api}/login`;
-var api_user_info_url = `${host_api}/me`;
+var api_admin_login_url = `${host_api}/api/v1/admin/login`;
+//var api_user_info_url = `${host_api}/me`;
 
 // CREATE ADMIN OR MERCHANT
 var api_create_user_url = `${host_api}/register`;
@@ -37,6 +37,12 @@ var api_get_one_admin_url = `${host_api}/v1/admin/`;
 // UPDATE ONE ADMIN INFO
 var api_update_one_admin_url = `${host_api}/v1/admin/`;
 
+
+// ADD MERCHANT
+var api_add_merchant_url =  `${host_api}/api/v1/admin/merchants/add`;
+
+// GET MERCHANT
+var api_get_merchant_url =  `${host_api}/api/v1/admin/merchants/get`;
 
 // LIST MERCHANTS
 var api_list_merchants_url = `${host_api}/v1/merchant`;
@@ -60,14 +66,16 @@ function show_log_in_console(log){
 function user_has_api_token()
 {
     if(
-        (localStorage.getItem("access_token") != null && localStorage.getItem("refresh_token") != null) 
-        && 
-        (localStorage.getItem("access_token").trim() != "" && localStorage.getItem("refresh_token").trim() != ""))
-        {
-            return true;
-        } else {
-            return false;
-        }
+        (localStorage.getItem("admin_access_token") != null && localStorage.getItem("admin_access_token").trim() != "")
+         && (localStorage.getItem("admin_firstname") != null && localStorage.getItem("admin_firstname").trim() != "")
+         && (localStorage.getItem("admin_surname") != null && localStorage.getItem("admin_surname").trim() != "")
+    
+    )
+    {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
@@ -99,7 +107,7 @@ function sign_out_error(errorThrown)
 function sign_me_out()
 {    
     fade_in_loader_and_fade_out_form("logoutloader", "logoutspan");     
-    var bearer = "Bearer " + localStorage.getItem("access_token"); 
+    var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
     send_restapi_request_to_server_from_form("get", api_logout_url, bearer, "", "json", sign_out_success, sign_out_error);
 }
 
@@ -160,13 +168,12 @@ function send_request_to_server_from_form(method, url_to_server, form_data, data
         url: url_to_server,
         data:  form_data,
         dataType: data_type,
-        success: function(response, textStatus, xhr){ 
+        success: function(response){ 
             show_log_in_console(response);
-            show_log_in_console("textStatus: " + textStatus);
-            if(textStatus == "success"){
+            if(response.status.trim() == "success"){
                 success_response_function(response);
             } else {
-                error_response_function(response);
+                error_response_function(response.message);
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -180,29 +187,26 @@ function send_restapi_request_to_server_from_form(method, url_to_server, authori
 {
     $.ajax({
         type: method,
-        url: url_to_server,
-        headers: { 
-            'Authorization': authorization,
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
+        url: url_to_server,headers: {
+            'Authorization': authorization
          },
-        data: form_data,
-        success: function(response, textStatus, xhr){ 
+        data:  form_data,
+        dataType: data_type,
+        success: function(response){ 
             show_log_in_console(response);
-            show_log_in_console("textStatus: " + textStatus);
+
             if(response == "Unauthorized"){
                 user_token_is_no_longer_valid();
                 return;
             } 
-            if(textStatus == "success"){
+            if(response.status.trim() == "success"){
                 success_response_function(response);
             } else {
-                error_response_function(response);
+                error_response_function(response.message);
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             show_log_in_console(errorThrown);
-            show_log_in_console("textStatus2: " + textStatus);
             if(errorThrown == "Unauthorized"){
                 user_token_is_no_longer_valid();
                 return;

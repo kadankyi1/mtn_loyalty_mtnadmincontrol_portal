@@ -2,13 +2,12 @@
 $active_page = "Dashboard";
 ?>
 <!-- INCLUDING THE FILE THAT HOLDS THE CORE STRUCTURE OF THE PAGE -->
-@extends('app')
+@extends('mtnadministrator.app')
 
 <!-- INCLUDING CUSTOM SCRIPTS AND STYLES -->
 @section('top_scripts_and_styles')
     <link rel="stylesheet" href="/css/custom.css">
     <script src="/js/custom/config.js"></script>
-    <script src="/js/custom/signedinuser/auth.js"></script>
 @endsection()
 
 @section('main_content_and_footer')
@@ -23,12 +22,12 @@ $active_page = "Dashboard";
                             <div class="col">
                                 <!-- Title -->
                                 <h6 class="text-uppercase font-14">
-                                    Budget
+                                    Pending Claims
                                 </h6>
 
                                 <!-- Heading -->
-                                <span class="font-24 text-dark mb-0">
-                                    $24,500
+                                <span class="font-24 text-dark mb-0" id="merchants">
+                                    500
                                 </span>
                             </div>
 
@@ -51,11 +50,11 @@ $active_page = "Dashboard";
                             <div class="col">
                                 <!-- Title -->
                                 <h6 class="font-14 text-uppercase">
-                                    Total Hours
+                                    Pending Claims
                                 </h6>
                                 <!-- Heading -->
                                 <span class="font-24 text-dark mb-0">
-                                    663.5
+                                    65
                                 </span>
                             </div>
                             <div class="col-auto">

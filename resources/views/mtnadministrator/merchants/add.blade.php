@@ -2,13 +2,13 @@
 $active_page = "Merchants";
 ?>
 <!-- INCLUDING THE FILE THAT HOLDS THE CORE STRUCTURE OF THE PAGE -->
-@extends('app')
+@extends('mtnadministrator.app')
 
 <!-- INCLUDING CUSTOM SCRIPTS AND STYLES -->
 @section('top_scripts_and_styles')
     <link rel="stylesheet" href="/css/custom.css">
-    <script src="/js/custom/config.js"></script>
-    <script src="/js/custom/auth.js"></script>
+    <script src="/js/custom/mtnadministrator/config.js"></script>
+    <script src="/js/custom/mtnadministrator/auth.js"></script>
 @endsection()
 
 @section('main_content_and_footer')
@@ -27,25 +27,25 @@ $active_page = "Merchants";
                             </div> 
                             <form id="form">
                                 <div class="form-group">
-                                    <label for="merchant_name">Merchant Name</label>
+                                    <label for="merchant_name">Name</label>
                                     <input type="text" id="merchant_name" name="merchant_name" class="form-control" placeholder="Enter Merchant Name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="username">User Name</label>
-                                    <input type="text" id="username" name="username" class="form-control" placeholder="Enter Username">
+                                    <label for="merchant_phone_number">Phone Number</label>
+                                    <input type="text" id="merchant_phone_number" name="merchant_phone_number" class="form-control" placeholder="Enter Phone Number">
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Email Address</label>
-                                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter email">
+                                    <label for="merchant_email">Email Address</label>
+                                    <input type="email" id="merchant_email" name="merchant_email" class="form-control" placeholder="Enter email">
                                 </div>
                                 <div class="form-group">
-                                    <label for="pass">Password</label>
-                                    <input type="password" id="pass" name="password" class="form-control" placeholder="Password">
+                                    <label for="merchant_location">Location Address</label>
+                                    <input type="text" id="merchant_location" name="merchant_location" class="form-control" placeholder="Enter Location">
                                 </div>
                                 <input type="text" readonly="readonly" style="display: none" name="role_id" value="2">
                                 <div class="form-group">
-                                    <label for="pass_confirm">Password</label>
-                                    <input type="password" id="pass_confirm" name="password_confirm" class="form-control" id="exampleInputPassword12" placeholder="Confirm Password">
+                                    <label for="pass_confirm">PIN</label>
+                                    <input type="password" id="admin_pin" name="admin_pin" class="form-control" placeholder="Enter your PIN">
                                 </div>
                                 <button type="submit" class="btn btn-primary mr-2">Submit</button>
                             </form>
@@ -104,5 +104,5 @@ $active_page = "Merchants";
 <script src="/js/default-assets/file-upload.js"></script>
 
 <!-- CUSTOMJS -->
-<script src="/js/custom/merchants/merchants.js"></script>
+<script src="/js/custom/mtnadministrator/merchants/merchants.js"></script>
 @endsection

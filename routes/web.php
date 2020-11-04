@@ -22,8 +22,16 @@ Route::get('/admin/login', function () {
     return view('mtnadministrator/login');
 });
 
-Route::get('/admin/user/home', function () {
-    return view('mtnadministrator/index');
+
+
+/*
+|--------------------------------------------------------------------------
+| DASHBOARD
+|--------------------------------------------------------------------------
+|
+*/
+Route::get('/admin/dashboard', function () {
+    return view('mtnadministrator/dashboard');
 });
 
 /*
@@ -36,8 +44,8 @@ Route::get('/admin/merchants/add', function () {
     return view('mtnadministrator/merchants/add');
 });
 
-Route::get('/admin/merchants/list', function () {
-    return view('mtnadministrator/merchants/list');
+Route::get('/admin/merchants/search', function () {
+    return view('mtnadministrator/merchants/search');
 });
 
 Route::get('/admin/merchants/edit/{id}', function ($id) {

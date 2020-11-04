@@ -529,6 +529,18 @@ public function search_one_merchant(Request $request)
     $this_merchant = DB::table('merchants')
     ->where("merchant_phone_number", "=", $request->merchant_phone_number)
     ->get();
+
+    $admin_id = $this_merchant[0]->admin_id;
+    $admin = Administrator::where('admin_id', $admin_id)->first();
+
+    if ($admin != null && $admin->first_name != "" && $admin->last_name != "") {
+        $admin_fullname = $admin->first_name . " " . $admin->last_name;
+    } else {
+        $admin_fullname = "Unavailable";
+    }
+
+    echo $admin_fullname;
+    $this_merchant->admin_fullname = $admin_fullname;
     
     return response(["status" => "success", "message" => "Operation successful", "data" => $this_merchant]);
         

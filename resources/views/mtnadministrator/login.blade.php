@@ -66,7 +66,7 @@
                                 </div> 
                                 <form id="form">
                                     <div class="form-group">
-                                        <input class="form-control login" type="text" name="username" id="emailaddress" required="" placeholder="Enter username">
+                                        <input class="form-control login" type="text" name="admin_phone_number" id="admin_phone_number" required="" placeholder="Enter phone number">
                                     </div>
 
                                     <div class="form-group">
