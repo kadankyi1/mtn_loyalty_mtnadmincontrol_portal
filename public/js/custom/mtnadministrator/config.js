@@ -8,7 +8,7 @@ var hostweb = "http://mtncustomerloyalty";
 var show_logging_in_console = "true"
 
 // LOGIN PAGE URL
-var web_login_url = `${hostweb}/`;
+var web_login_url = `${hostweb}/admin/login`;
 
 // INDEX PAGE URL
 var web_home_url = `${hostweb}/admin/dashboard`;
@@ -26,13 +26,14 @@ var api_admin_login_url = `${host_api}/api/v1/admin/login`;
 //var api_user_info_url = `${host_api}/me`;
 
 // CREATE ADMIN OR MERCHANT
-var api_create_user_url = `${host_api}/register`;
+var api_add_admin_url =  `${host_api}/api/v1/admin/administrators/add`;
+
 
 // LIST ADMINS
-var api_list_admins_url = `${host_api}/v1/admin`;
+var api_list_admins_url = `${host_api}/api/v1/admin/administrators/list`;
 
 // GET ONE ADMIN INFO
-var api_get_one_admin_url = `${host_api}/v1/admin/`;
+var api_get_one_admin_url = `${host_api}/api/v1/admin/administrators/get?admin_id=`;
 
 // UPDATE ONE ADMIN INFO
 var api_update_one_admin_url = `${host_api}/v1/admin/`;

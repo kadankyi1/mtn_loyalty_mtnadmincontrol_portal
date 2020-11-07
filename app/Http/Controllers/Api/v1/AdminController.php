@@ -137,7 +137,7 @@ public function add_admin(Request $request)
         "admin_add_merchant" => "bail|nullable|regex:(admin_add_merchant)",
         "admin_update_merchant" => "bail|nullable|regex:(admin_update_merchant)",
         "admin_view_merchant" => "bail|nullable|regex:(admin_view_merchant)",
-        "admin_view_redemptions" => "bail|nullable|regex:(admin_view_redemptions)",
+        "admin_view_claims" => "bail|nullable|regex:(admin_view_claims)",
         "admin_pin" => "bail|required|min:4|max:8",
     ]);
 
@@ -154,6 +154,7 @@ public function add_admin(Request $request)
         $validatedData["admin_pin"] = Hash::make(substr($request->admin_phone_number,-4));
         $validatedData["password"] = bcrypt($request->admin_phone_number);
         $validatedData["admin_flagged"] = false;
+        $validatedData["creator_admin_id"] = auth()->user()->admin_id;
     
         $validatedData["admin_scope"] = "";
 
@@ -175,12 +176,12 @@ public function add_admin(Request $request)
         if(trim($request->admin_view_merchant) != ""){
             $validatedData["admin_scope"] = $validatedData["admin_scope"]  .  " " .  $request->admin_view_merchant;
         }
-        if(trim($request->admin_view_redemptions) != ""){
-            $validatedData["admin_scope"] = $validatedData["admin_view_redemptions"]  .  " " .  $request->admin_view_redemptions;
+        if(trim($request->admin_view_claims) != ""){
+            $validatedData["admin_scope"] = $validatedData["admin_scope"]  .  " " .  $request->admin_view_claims;
         }
     
     
-        $administrator = Administrator::create($validatedData);
+        Administrator::create($validatedData);
         return response(["status" => "success", "message" => "Administrator added successsfully."]);
     }
 
@@ -207,15 +208,12 @@ public function get_all_admins(Request $request)
         return response(["status" => "fail", "message" => "Account access restricted"]);
     }
 
-    $request->validate([
-        "page" => "bail|required|integer",
-    ]);
 
 
 
     $admins = DB::table('administrators')
     ->select('administrators.*')
-    ->simplePaginate(50);
+    ->get();
 
     for ($i=0; $i < count($admins); $i++) { 
 
@@ -314,7 +312,7 @@ public function edit_admin(Request $request)
         "admin_add_merchant" => "bail|nullable|regex:(admin_add_merchant)",
         "admin_update_merchant" => "bail|nullable|regex:(admin_update_merchant)",
         "admin_view_merchant" => "bail|nullable|regex:(admin_view_merchant)",
-        "admin_view_redemptions" => "bail|nullable|regex:(admin_view_redemptions)",
+        "admin_view_claims" => "bail|nullable|regex:(admin_view_claims)",
         "admin_pin" => "bail|required|min:4|max:8",
     ]);
     
@@ -348,8 +346,8 @@ public function edit_admin(Request $request)
         if(trim($request->admin_view_merchant) != ""){
             $validatedData["admin_scope"] = $validatedData["admin_scope"]  .  " " .  $request->admin_view_merchant;
         }
-        if(trim($request->admin_view_redemptions) != ""){
-            $validatedData["admin_scope"] = $validatedData["admin_view_redemptions"]  .  " " .  $request->admin_view_redemptions;
+        if(trim($request->admin_view_claims) != ""){
+            $validatedData["admin_scope"] = $validatedData["admin_view_claims"]  .  " " .  $request->admin_view_claims;
         }
     
         $admin = Administrator::find($request->admin_id);
@@ -526,23 +524,48 @@ public function search_one_merchant(Request $request)
     }
 
 
+
     $this_merchant = DB::table('merchants')
     ->where("merchant_phone_number", "=", $request->merchant_phone_number)
     ->get();
 
-    $admin_id = $this_merchant[0]->admin_id;
-    $admin = Administrator::where('admin_id', $admin_id)->first();
+    $unpaid_claims = 0;
+    $admin_fullname = "Unavailable";
 
-    if ($admin != null && $admin->first_name != "" && $admin->last_name != "") {
-        $admin_fullname = $admin->first_name . " " . $admin->last_name;
-    } else {
-        $admin_fullname = "Unavailable";
+    if($this_merchant[0] != null){
+        $where_array = array(
+            ['administrators.admin_id', '=', $this_merchant[0]->admin_id]
+        ); 
+
+        $admin = Administrator::where($where_array)->first();
+
+
+        if ($admin != null && $admin->admin_firstname != "" && $admin->admin_surname != "") {
+            $admin_fullname = $admin->admin_firstname . " " . $admin->admin_surname;
+        }
+    
+        $where_array = array(
+            ['paid_status', '=',  0],
+            ['merchant_id', '=',  $this_merchant[0]->admin_id],
+            ['claim_flagged', '=',  0],
+        );     
+
+        $unpaid_claims = DB::table('claims')
+        ->selectRaw('count(*)')
+        ->where($where_array)
+        ->get();    
+        $unpaid_claims = (array) $unpaid_claims[0];
+    
     }
 
-    echo $admin_fullname;
-    $this_merchant->admin_fullname = $admin_fullname;
+    $this_merchant[0]->admin_fullname = $admin_fullname;
     
-    return response(["status" => "success", "message" => "Operation successful", "data" => $this_merchant]);
+    $this_merchant[0]->merchant_unpaid_claims = $unpaid_claims["count(*)"];
+    return response([
+        "status" => "success", 
+        "message" => "Operation successful", 
+        "data" => $this_merchant
+        ]);
         
 }
 
@@ -555,7 +578,7 @@ public function search_one_merchant(Request $request)
 |--------------------------------------------------------------------------
 |
 */
-public function get_merchant_redemptions(Request $request)
+public function get_merchant_claims(Request $request)
 {
     $log_controller = new LogController();
 
@@ -563,13 +586,13 @@ public function get_merchant_redemptions(Request $request)
         return response(["status" => "fail", "message" => "Permission Denied. Please log out and login again"]);
     }
     
-    if (!$request->user()->tokenCan('admin_view_redemptions')) {
-        $log_controller->save_log("administrator", auth()->user()->admin_id, "Redemptions|Admin", "Permission denined for trying to get merchants redemptions");
+    if (!$request->user()->tokenCan('admin_view_claims')) {
+        $log_controller->save_log("administrator", auth()->user()->admin_id, "Claims|Admin", "Permission denined for trying to get merchants claims");
         return response(["status" => "fail", "message" => "Permission Denied. Please log out and login again"]);
     }
 
     if (auth()->user()->admin_flagged) {
-        $log_controller->save_log("administrator", auth()->user()->admin_id, "Redemptions|Admin", "Getting merchants redemptions failed because admin is flagged");
+        $log_controller->save_log("administrator", auth()->user()->admin_id, "Claims|Admin", "Getting merchants claims failed because admin is flagged");
         $request->user()->token()->revoke();
         return response(["status" => "fail", "message" => "Account access restricted"]);
     }
@@ -583,7 +606,7 @@ public function get_merchant_redemptions(Request $request)
         ['vendor_paid_fiat', '=',  1],
     ); 
 
-    $unpaid_redemptions = DB::table('redemptions')
+    $unpaid_claims = DB::table('claims')
     ->selectRaw('count(*)')
     ->where($where_array)
     ->get();
@@ -593,13 +616,13 @@ public function get_merchant_redemptions(Request $request)
     ); 
 
 
-    $redemptions = DB::table('redemptions')
-    ->select('redemptions.*')
+    $claims = DB::table('claims')
+    ->select('claims.*')
     ->where($where_array)
     ->simplePaginate(50);
 
     
-    return response(["status" => "success", "message" => "Operation successful", "data" => $redemptions, "unpaid" => $unpaid_redemptions]);
+    return response(["status" => "success", "message" => "Operation successful", "data" => $claims, "unpaid" => $unpaid_claims]);
 }
 
 
@@ -626,17 +649,17 @@ public function get_dashboard(Request $request)
     }
 
     $where_array = array(
-        ['vendor_paid_fiat', '=',  0],
+        ['paid_status', '=',  0],
     ); 
 
-    $unpaid_redemptions = DB::table('redemptions')
+    $unpaid_claims = DB::table('claims')
     ->selectRaw('count(*)')
     ->where($where_array)
     ->get();
 
-    $cedis_sum_unpaid_redemptions = DB::table('redemptions')
+    $cedis_sum_unpaid_claims = DB::table('claims')
     ->where($where_array)
-    ->sum('redemptions.redemption_cedi_equivalent_paid');
+    ->sum('claims.claim_amount');
 
     $al_merchants = DB::table('merchants')
     ->selectRaw('count(*)')
@@ -648,8 +671,8 @@ public function get_dashboard(Request $request)
         "status" => "success", 
         "message" => "Operation successful", 
         "merchants" => $al_merchants, 
-        "unpaid" => $unpaid_redemptions, 
-        "sum_unpaid" => $cedis_sum_unpaid_redemptions
+        "unpaid" => $unpaid_claims, 
+        "sum_unpaid" => $cedis_sum_unpaid_claims
         ]);
 }
 

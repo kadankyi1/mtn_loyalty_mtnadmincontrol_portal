@@ -18,7 +18,7 @@ function success_response_function(response)
     localStorage.setItem("admin_surname", response.admin_surname);
     localStorage.setItem("admin_access_token", response.access_token);
     show_notification("msg_holder", "success", "Success:", "Login successful");
-    redirect_to_next_page(admin_web_passcode_page_url, false);
+    redirect_to_next_page(web_home_url, false);
 }
 
 function error_response_function(errorThrown)

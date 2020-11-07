@@ -2,13 +2,13 @@
 $active_page = "Administrator";
 ?>
 <!-- INCLUDING THE FILE THAT HOLDS THE CORE STRUCTURE OF THE PAGE -->
-@extends('app')
+@extends('mtnadministrator.app')
 
 <!-- INCLUDING CUSTOM SCRIPTS AND STYLES -->
 @section('top_scripts_and_styles')
     <link rel="stylesheet" href="/css/custom.css">
-    <script src="/js/custom/config.js"></script>
-    <script src="/js/custom/auth.js"></script>
+    <script src="/js/custom/mtnadministrator/config.js"></script>
+    <script src="/js/custom/mtnadministrator/auth.js"></script>
 @endsection()
 
 @section('main_content_and_footer')
@@ -25,28 +25,85 @@ $active_page = "Administrator";
                             <div class="d-flex justify-content-center">
                                 <div id="loader" class="customloader"></div>
                             </div> 
-                            <form id="updateform" style="display: none;">
+                            <form id="updateform">
                                 <div class="form-group">
-                                    <label for="username">User Name</label>
-                                    <input type="text" id="username" name="username" class="form-control" readonly="readonly" placeholder="Enter Username">
+                                    <label for="admin_surname">Last Name</label>
+                                    <input type="text" id="admin_surname" name="admin_surname" class="form-control" placeholder="Enter Last Name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="first_name">First Name</label>
-                                    <input type="text" id="first_name" name="first_name" class="form-control" placeholder="Enter First Name">
+                                    <label for="admin_firstname">First Name</label>
+                                    <input type="text" id="admin_firstname" name="admin_firstname" class="form-control" placeholder="Enter First Name">
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3 col-xs-3">
+                                        <div class="form-group">
+                                            <label for="admin_add_admin">Add Admins</label>
+                                            <select name="admin_add_admin" class="form-control">
+                                                <option value="admin_add_admin">Yes</option>
+                                                <option value="">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-3">
+                                        <div class="form-group">
+                                            <label for="admin_view_admins">View Admins</label>
+                                            <select name="admin_view_admins" class="form-control">
+                                                <option value="admin_view_admins">Yes</option>
+                                                <option value="">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-3">
+                                        <div class="form-group">
+                                            <label for="admin_update_admin">Update Admins</label>
+                                            <select name="admin_update_admin" class="form-control">
+                                                <option value="admin_update_admin">Yes</option>
+                                                <option value="">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-3">
+                                        <div class="form-group">
+                                            <label for="admin_add_merchant">Add Merchant</label>
+                                            <select name="admin_add_merchant" class="form-control">
+                                                <option value="admin_add_merchant">Yes</option>
+                                                <option value="">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-3">
+                                        <div class="form-group">
+                                            <label for="admin_update_merchant">Update Merchant</label>
+                                            <select name="admin_update_merchant" class="form-control">
+                                                <option value="admin_update_merchant">Yes</option>
+                                                <option value="">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-3">
+                                        <div class="form-group">
+                                            <label for="admin_view_merchant">View Merchant</label>
+                                            <select name="admin_view_merchant" class="form-control">
+                                                <option value="admin_view_merchant">Yes</option>
+                                                <option value="">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-3">
+                                        <div class="form-group">
+                                            <label for="admin_view_claims">View Claims</label>
+                                            <select name="admin_view_claims" class="form-control">
+                                                <option value="admin_view_claims">Yes</option>
+                                                <option value="">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="last_name">Last Name</label>
-                                    <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Enter Last Name">
+                                    <label for="admin_pin">PIN</label>
+                                    <input type="password" id="admin_pin" name="admin_pin" class="form-control" placeholder="PIN">
                                 </div>
-                                <div class="form-group">
-                                    <label for="address">Address</label>
-                                    <input type="text" id="address" name="address" class="form-control" placeholder="Enter Address">
-                                </div>
-                                <div class="form-group">
-                                    <label for="mobile">Mobile Number</label>
-                                    <input type="text" id="mobile" name="mobile" class="form-control" placeholder="Enter Mobile Number">
-                                </div>
-                                <span id="submit_button_holder"></span>
+                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
                             </form>
                         </div>
                     </div>
@@ -64,7 +121,7 @@ $active_page = "Administrator";
                 <footer class="footer-area d-sm-flex justify-content-center align-items-center justify-content-between">
                     <!-- Copywrite Text -->
                     <div class="copywrite-text">
-                        <p>Created by @<a href="#">Antina</a></p>
+                        <p>Created by @<a href="#">Shrinq Ghana</a></p>
                     </div>
                     <div class="fotter-icon text-center">
                         <a href="#" class="action-item mr-2" data-toggle="tooltip" title="Facebook">
@@ -103,7 +160,7 @@ $active_page = "Administrator";
 <script src="/js/default-assets/file-upload.js"></script>
 
 <!-- CUSTOMJS -->
-<script src="/js/custom/administrators/administrators.js"></script>
+<script src="/js/custom/mtnadministrator/administrators/administrators.js"></script>
 
 <script type="text/javascript">
     var i = '<?php echo intval($administrator_id); ?>';

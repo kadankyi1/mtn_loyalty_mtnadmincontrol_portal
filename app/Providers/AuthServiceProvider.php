@@ -40,7 +40,7 @@ class AuthServiceProvider extends ServiceProvider
             'admin_update_merchant' => 'Update merchant',
             'admin_view_merchant' => 'View merchants',
 
-            'admin_view_redemptions' => 'View redemptions',
+            'admin_view_claims' => 'View claims',
 
             //admin_add_admin admin_update_admin admin_view_admins admin_add_merchant admin_update_merchant admin_view_merchant admin_view_redemptions
             

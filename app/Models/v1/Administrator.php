@@ -40,6 +40,7 @@ class Administrator extends Authenticatable
         'password',
         'admin_flagged',
         'admin_scope',
+        'creator_admin_id',
         'created_at',
         'updated_at',
     ];

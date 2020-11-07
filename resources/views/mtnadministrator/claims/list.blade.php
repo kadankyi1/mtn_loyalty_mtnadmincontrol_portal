@@ -1,5 +1,5 @@
 <?php
-$active_page = "Administrators";
+$active_page = "Claims";
 ?>
 <!-- INCLUDING THE FILE THAT HOLDS THE CORE STRUCTURE OF THE PAGE -->
 @extends('mtnadministrator.app')
@@ -20,7 +20,7 @@ $active_page = "Administrators";
                             <div class="col-md-12 mb-30">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h6 class="card-title">Administrators</h6>
+                                        <h6 class="card-title">Claims</h6>
                                         <div class="d-flex justify-content-center">
                                             <div id="loader" class="customloader" style="display: none;"></div>
                                         </div> 
@@ -29,12 +29,12 @@ $active_page = "Administrators";
                                                 <thead>
                                                     <tr>
                                                         <th>ID</th>
-                                                        <th>Username</th>
-                                                        <th>Phone</th>
-                                                        <th>Email</th>
-                                                        <th>Status</th>
+                                                        <th>Merchant-ID</th>
+                                                        <th>Merchant-Name</th>
+                                                        <th>Claim-Amount</th>
                                                         <th>Created-By</th>
-                                                        <th>Creation</th>
+                                                        <th>Status</th>
+                                                        <th>Admin-Name</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="table_body_list">

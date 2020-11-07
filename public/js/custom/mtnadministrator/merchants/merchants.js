@@ -61,6 +61,8 @@ $(document).ready(function ()
 */
 function search_merchant_success_response_function(response)
 {
+    show_log_in_console("response: ");
+    show_log_in_console(response);
     if(response.data.length > 0){
         const element = response.data[0];
         if(element.merchant_flagged == 0){
@@ -77,12 +79,12 @@ function search_merchant_success_response_function(response)
         $("#merchant_email").html(element.merchant_email);
         $("#created_at").html(element.created_at);
 
-        $("#merchant_pending_claims").html(element.merchant_email);
-        $("#merchant_balance").html(element.merchant_email);
-        $("#admin_name").html(element.admin_id);
+        $("#merchant_pending_claims").html(element.merchant_unpaid_claims);
+        $("#merchant_balance").html(element.merchant_balance);
+        $("#admin_name").html(element.admin_fullname);
         
-        $('#search_holder').fadeOut();
         $('#profile_merchant').fadeIn();
+        fade_out_loader_and_fade_in_form("loader", "search_form"); 
     } else {
         fade_out_loader_and_fade_in_form("loader", "search_form"); 
         show_notification("msg_holder", "danger", "", "Merchant not found");

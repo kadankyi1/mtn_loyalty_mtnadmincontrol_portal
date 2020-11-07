@@ -62,7 +62,10 @@
                     <nav>
                         <ul class="sidebar-menu" data-widget="tree">             
                             <li  <?php if(isset($active_page) && $active_page == 'Dashboard'){ echo 'class="active"'; } ?> ><a href="index.html"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-                            <li <?php if(isset($active_page) && $active_page == 'Reports'){ echo 'class="active"'; } ?>><a href="calendar.html"><i class="fa fa-bar-chart"></i> <span>Reports</span></a></li>
+                            <!--
+                                <li <?php if(isset($active_page) && $active_page == 'Reports'){ echo 'class="active"'; } ?>><a href="calendar.html"><i class="fa fa-bar-chart"></i> <span>Reports</span></a></li>
+                            -->
+                            <li <?php if(isset($active_page) && $active_page == 'Claims'){ echo 'class="active"'; } ?>><a href="<?php echo url('/'); ?>/admin/claims/list"><i class="fa fa-bar-chart"></i> <span>Claims</span></a></li>
                             <li class="treeview <?php if(isset($active_page) && $active_page == 'Merchants'){ echo 'active'; } ?>">
                                 <a href="javascript:void(0)"><i class="fa fa-building-o"></i><span>Merchants</span> <i class="fa fa-angle-right"></i></a>
                                 <ul class="treeview-menu">
@@ -73,8 +76,8 @@
                             <li class="treeview <?php if(isset($active_page) && $active_page == 'Administrators'){ echo 'active'; } ?>">
                                 <a href="javascript:void(0)"><i class="fa fa-users"></i> <span>Administrators</span> <i class="fa fa-angle-right"></i></a>
                                 <ul class="treeview-menu">
-                                    <li><a href="<?php echo url('/'); ?>/administrators/add">Add</a></li>
-                                    <li><a href="<?php echo url('/'); ?>/administrators/list">View</a></li>
+                                    <li><a href="<?php echo url('/'); ?>/admin/administrators/add">Add</a></li>
+                                    <li><a href="<?php echo url('/'); ?>/admin/administrators/list">View</a></li>
                                 </ul>
                             </li>
                         </ul>
