@@ -626,6 +626,7 @@ public function get_merchant_claims(Request $request)
 }
 
 
+
 /*
 |--------------------------------------------------------------------------
 |--------------------------------------------------------------------------
@@ -657,24 +658,86 @@ public function get_dashboard(Request $request)
     ->where($where_array)
     ->get();
 
+    $unpaid_claims = (array) $unpaid_claims[0];
+    $unpaid_claims = (array) $unpaid_claims["count(*)"];
+
     $cedis_sum_unpaid_claims = DB::table('claims')
     ->where($where_array)
     ->sum('claims.claim_amount');
+
 
     $al_merchants = DB::table('merchants')
     ->selectRaw('count(*)')
     ->get();
 
+    $al_merchants = (array) $al_merchants[0];
+    $al_merchants = (array) $al_merchants["count(*)"];
 
+
+    $points_to_one_cedi = DB::table('settings')
+    ->where("settings_id", "=", "points_to_one_cedi")
+    ->first();
+
+    if($points_to_one_cedi != null){
+        $points_to_one_cedi = $points_to_one_cedi->settings_info_1;
+    } else {
+        $points_to_one_cedi = "N/A";
+    }
     
+
+
+    $claims = DB::table('claims')
+    ->select('claims.*')
+    ->where("paid_status", "=", 0)
+    ->get();
+
+    for ($i=0; $i < count($claims); $i++) { 
+
+        if($claims[$i]->merchant_id > 0 && $claims[$i]->merchant_id != null){
+            $this_merchant = DB::table('merchants')
+            ->where("merchant_id", "=", $claims[$i]->merchant_id)
+            ->get();
+        
+            if(isset($this_merchant[0])){
+                $claims[$i]->merchant_fullname = $this_merchant[0]->merchant_name;
+                $claims[$i]->merchant_phone_number = $this_merchant[0]->merchant_phone_number;
+            } else {
+                $claims[$i]->merchant_fullname = "N/A";
+                $claims[$i]->merchant_phone_number = "N/A";
+            }
+        } else {
+            $claims[$i]->merchant_fullname = "N/A";
+            $claims[$i]->merchant_phone_number = "N/A";
+        }
+
+        if($claims[$i]->payer_admin_id > 0 && $claims[$i]->payer_admin_id != null){
+            $this_admin = DB::table('administrators')
+            ->where("admin_id", "=", $claims[$i]->payer_admin_id)
+            ->get();
+        
+            if(isset($this_admin[0])){
+                $claims[$i]->admin_fullname = $this_admin[0]->admin_firstname . " " . $this_admin[0]->admin_surname;
+            } else {
+                $claims[$i]->admin_fullname = "N/A";
+            }
+        } else {
+            $claims[$i]->admin_fullname = "N/A";
+        }
+    }
+
     return response([
         "status" => "success", 
         "message" => "Operation successful", 
-        "merchants" => $al_merchants, 
-        "unpaid" => $unpaid_claims, 
-        "sum_unpaid" => $cedis_sum_unpaid_claims
+        "merchants" => $al_merchants[0], 
+        "unpaid" => $unpaid_claims[0], 
+        "sum_unpaid" => $cedis_sum_unpaid_claims, 
+        "points_to_one_cedi" => $points_to_one_cedi, 
+        "claims" => $claims
         ]);
 }
+
+
+
 
 
 }

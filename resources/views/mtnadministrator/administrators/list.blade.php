@@ -22,7 +22,7 @@ $active_page = "Administrators";
                                     <div class="card-body">
                                         <h6 class="card-title">Administrators</h6>
                                         <div class="d-flex justify-content-center">
-                                            <div id="loader" class="customloader" style="display: none;"></div>
+                                            <div id="loader5 class="customloader" style="display: none;"></div>
                                         </div> 
                                         <div class="table-responsive">
                                             <table id="dataTableExample" class="table">
@@ -35,6 +35,7 @@ $active_page = "Administrators";
                                                         <th>Status</th>
                                                         <th>Created-By</th>
                                                         <th>Creation</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="table_body_list">

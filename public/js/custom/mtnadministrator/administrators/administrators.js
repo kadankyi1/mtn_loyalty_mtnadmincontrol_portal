@@ -104,6 +104,7 @@ function get_admins_for_page_success_response_function(response)
                 + '<td>' + status +' </td>'
                 + '<td>' + element.creator_name + '</td>'
                 + '<td>' + element.created_at + '</td>'
+                + '<td><img src' + element.created_at + '</td>'
                 + '</tr>'
             );
         }

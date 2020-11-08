@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\v1;
 
-use Laravel\Passport\HasApiTokens;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Redemption extends Model
-{
-    
+class Settings extends Model
+{ 
     use HasApiTokens, Notifiable;
 
     /**
@@ -25,16 +22,11 @@ class Redemption extends Model
      * @var array
      */
     protected $fillable = [
-        'redemption_id', 
-        'merchant_id', 
-        'customer_id', 
-        'customer_phone', 
-        'points_to_one_cedi_rate_used',
-        'redeemed_points',
-        'redemption_cedi_equivalent_paid',
+        'settings_id', 
+        'settings_info_1', 
+        'settings_info_2', 
         'created_at',
         'updated_at',
     ];
 
-    //
 }

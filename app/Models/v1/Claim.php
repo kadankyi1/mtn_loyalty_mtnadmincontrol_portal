@@ -30,6 +30,9 @@ class Claim extends Model
         'paid_status',
         'claim_flagged',
         'merchant_id',
+        'merchant_fullname',
+        'merchant_phone_number',
+        'admin_fullname',
         'created_at',
         'updated_at',
     ];

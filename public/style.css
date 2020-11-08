@@ -133,7 +133,7 @@ Last Updated: Mar 10, 2020
 
 body {
   background-color: #efeff6;
-  color: #74788d;
+  color: rgb(231, 191, 31);
   font-weight: 400;
   font-family: "Poppins", sans-serif;
   font-size: 14px;
@@ -154,7 +154,7 @@ h6 {
   font-family: "Poppins", sans-serif; }
 
 p {
-  color: #74788d;
+  color: rgb(231, 191, 31);
   line-height: 1.7;
   font-size: 14px;
   font-weight: 400;
@@ -526,7 +526,7 @@ img {
   transition-duration: 0.8s; }
 
 .text-color-gray {
-  color: #74788d; }
+  color: rgb(231, 191, 31); }
 
 .g-bg-black {
   background-color: #222222; }
@@ -928,7 +928,7 @@ button:focus {
   border-radius: 50% !important; }
 
 .text-color {
-  color: #74788d; }
+  color: rgb(231, 191, 31); }
 
 .sr-only {
   position: absolute;
@@ -1327,7 +1327,7 @@ div.tagsinput span.tag a {
   left: 0;
   width: 220px;
   height: 100%;
-  background-color: #16182f;
+  background-color: rgb(231, 191, 31);
   -webkit-transition-duration: 500ms;
   -o-transition-duration: 500ms;
   transition-duration: 500ms; }
@@ -1341,7 +1341,7 @@ div.tagsinput span.tag a {
   -webkit-transition-duration: 500ms;
   -o-transition-duration: 500ms;
   transition-duration: 500ms;
-  background-color: #16182f; }
+  background-color: rgb(231, 191, 31); }
 
 .ecaps-logo a {
   position: fixed;
@@ -1563,6 +1563,7 @@ div.tagsinput span.tag a {
   -o-transition-duration: 500ms;
   transition-duration: 500ms;
   -webkit-box-flex: 0;
+  color: black;
   -ms-flex: 0 0 calc(100% - 30px);
   flex: 0 0 calc(100% - 30px);
   max-width: calc(100% - 30px);
@@ -1581,7 +1582,7 @@ div.tagsinput span.tag a {
 
 .sidebar-menu li .treeview-menu li a {
   font-size: 13px;
-  color: #c0c6d1;
+  color: black;
   margin-left: 0;
   margin-right: 0;
   position: relative;
@@ -1603,7 +1604,7 @@ div.tagsinput span.tag a {
   max-width: 20px;
   width: 20px;
   font-size: 18px;
-  color: #c0c6d1; }
+  color: black; }
 
 .app-search {
   position: relative;
@@ -1655,7 +1656,7 @@ div.tagsinput span.tag a {
   color: #ffffff; }
 
 .sidebar-menu > li.menu-open > a {
-  color: #c0c6d1;
+  color: black;
   font-weight: 400;
   background-color: #1f2433; }
 
@@ -1663,7 +1664,7 @@ div.tagsinput span.tag a {
 .sidebar-menu > li.active > a,
 .sidebar-menu > li.menu-open > a {
   color: #ffffff;
-  background-color: #1f2242; }
+  background-color: rgb(158, 131, 22); }
 
 .sidebar-menu a .fa-angle-right {
   -webkit-transition-duration: 500ms;
@@ -1941,7 +1942,7 @@ div.tagsinput span.tag a {
       .top-header-area .left-side-navbar .nav-item.dropdown .dropdown-menu.megamenu-item ul:last-child {
         border-right: none; }
       .top-header-area .left-side-navbar .nav-item.dropdown .dropdown-menu.megamenu-item ul .nav-link {
-        color: #74788d;
+        color: rgb(231, 191, 31);
         font-weight: 400;
         font-size: 14px;
         padding: 0.5rem 1.5rem; }
@@ -2058,7 +2059,7 @@ div.tagsinput span.tag a {
   border: none;
   text-align: center;
   background-color: transparent;
-  color: #74788d;
+  color: rgb(231, 191, 31);
   line-height: 30px; }
 
 .top-search-bar button:focus {
@@ -2069,7 +2070,7 @@ div.tagsinput span.tag a {
   height: 70px;
   border: none;
   font-size: 12px;
-  color: #74788d;
+  color: rgb(231, 191, 31);
   border-radius: 4px;
   padding-left: 50px;
   padding-right: 15px; }
@@ -2080,26 +2081,26 @@ div.tagsinput span.tag a {
   outline: none !important; }
 
 input::-webkit-input-placeholder {
-  color: #74788d;
+  color: rgb(231, 191, 31);
   opacity: 1; }
 
 input:-ms-input-placeholder {
-  color: #74788d;
+  color: rgb(231, 191, 31);
   opacity: 1; }
 
 input::-ms-input-placeholder {
-  color: #74788d;
+  color: rgb(231, 191, 31);
   opacity: 1; }
 
 input::placeholder {
-  color: #74788d;
+  color: rgb(231, 191, 31);
   opacity: 1; }
 
 input:-ms-input-placeholder {
-  color: #74788d; }
+  color: rgb(231, 191, 31); }
 
 input::-ms-input-placeholder {
-  color: #74788d; }
+  color: rgb(231, 191, 31); }
 
 .top-message-area {
   position: relative;
@@ -2359,7 +2360,7 @@ input::-ms-input-placeholder {
 
 .footer-area .footer-nav li a {
   display: inline-block;
-  color: #74788d;
+  color: rgb(231, 191, 31);
   font-size: 14px;
   margin-left: 20px;
   font-weight: 700; }
@@ -2578,7 +2579,7 @@ input::-ms-input-placeholder {
 
 .dashboard-dropdown .btn {
   font-size: 20px;
-  color: #74788d;
+  color: rgb(231, 191, 31);
   width: 30px;
   height: 30px;
   padding: 0; }
@@ -2588,7 +2589,7 @@ input::-ms-input-placeholder {
     line-height: 30px; }
   .dashboard-dropdown .btn:hover, .dashboard-dropdown .btn:focus {
     font-size: 20px;
-    color: #74788d; }
+    color: rgb(231, 191, 31); }
 .dashboard-dropdown .dropdown-menu {
   -webkit-animation-name: dropdownAnimation;
   animation-name: dropdownAnimation;
@@ -2767,7 +2768,7 @@ input::-ms-input-placeholder {
     margin-bottom: 0;
     font-weight: 500;
     font-size: 12px;
-    color: #74788d; }
+    color: rgb(231, 191, 31); }
 
 .profile-icon {
   width: 30px;
@@ -3056,8 +3057,8 @@ button.bg-light:hover {
   color: inherit; }
 
 .btn-success:hover {
-  background-color: #1bb4a4;
-  border-color: #1bb4a4; }
+  background-color: rgb(231, 191, 31);
+  border-color: rgb(231, 191, 31); }
 
 .badge.badge-soft-danger {
   background-color: rgba(241, 100, 108, 0.15) !important;
@@ -6126,7 +6127,7 @@ div.tagsinput span.tag {
   font-size: 13px; }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-  color: #74788d;
+  color: rgb(231, 191, 31);
   line-height: 28px;
   font-size: 14px; }
 
@@ -6885,7 +6886,7 @@ select,
   margin-bottom: 3px; }
 
 .inbox-widget .inbox-item .inbox-item-text {
-  color: #74788d;
+  color: rgb(231, 191, 31);
   display: block;
   font-size: .8125rem;
   margin: 0; }
@@ -7509,7 +7510,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child::
 
 .single-product-icon a {
   font-size: 17px;
-  color: #74788d;
+  color: rgb(231, 191, 31);
   display: inline-block;
   -webkit-transition-duration: 300ms;
   -o-transition-duration: 300ms;
@@ -7762,7 +7763,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child::
   .dashboard-clock #dashboardDate {
     font-size: 14px;
     font-weight: 500;
-    color: #74788d; }
+    color: rgb(231, 191, 31); }
     @media only screen and (max-width: 767px) {
       .dashboard-clock #dashboardDate {
         font-size: 12px; } }
@@ -7938,7 +7939,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child::
 .kt-timeline .kt-timeline__item .kt-timeline__item-text {
   text-decoration: none;
   margin-left: 4.4rem;
-  color: #74788d;
+  color: rgb(231, 191, 31);
   font-weight: 400;
   font-size: 15px;
   display: block; }
@@ -10506,11 +10507,11 @@ body.loaded .page-loading {
 
 .mail-subject a {
   font-size: 13px;
-  color: #74788d;
+  color: rgb(231, 191, 31);
   font-weight: 500; }
 
 .mail-ontact a {
-  color: #74788d;
+  color: rgb(231, 191, 31);
   font-size: 13px;
   font-weight: 500; }
 
@@ -10560,7 +10561,7 @@ body.loaded .page-loading {
 
 .mail-tools.tooltip-demo h3 {
   font-size: 13px;
-  color: #74788d;
+  color: rgb(231, 191, 31);
   font-weight: 400; }
 
 .mail-add-title {
@@ -10600,7 +10601,7 @@ body.loaded .page-loading {
     border-top: 1px solid #e1eaea; }
     .file .file-name .h6 {
       font-size: 12px;
-      color: #74788d;
+      color: rgb(231, 191, 31);
       margin-bottom: 0; }
 
 .mail-attachment p {
@@ -10665,7 +10666,7 @@ body.loaded .page-loading {
   font-weight: 300; }
 
 .mail-pager span {
-  color: #74788d;
+  color: rgb(231, 191, 31);
   font-size: 14px;
   margin-right: 15px; }
 .mail-pager a {
@@ -10750,7 +10751,7 @@ body.loaded .page-loading {
   border-radius: 30px;
   padding: 5px 12px;
   font-size: 12px;
-  color: #74788d;
+  color: rgb(231, 191, 31);
   font-weight: 400;
   -webkit-transition-duration: 500ms;
   -o-transition-duration: 500ms;
@@ -11020,7 +11021,7 @@ body.loaded .page-loading {
         font-size: 30px; } }
   .coming-soon-content .text-form-area p {
     font-size: 18px;
-    color: #74788d; }
+    color: rgb(231, 191, 31); }
     @media only screen and (max-width: 767px) {
       .coming-soon-content .text-form-area p {
         font-size: 13px; } }

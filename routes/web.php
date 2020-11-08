@@ -78,9 +78,8 @@ Route::get('/admin/administrators/edit/{id}', function ($id) {
 |
 */
 Route::get('/admin/claims/list', function () {
-    return view('mtnadministrator/claims/list');
+    return view('mtnadministrator/administrators/add');
 });
-
 
 /*
 |--------------------------------------------------------------------------

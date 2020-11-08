@@ -33,7 +33,7 @@ var api_add_admin_url =  `${host_api}/api/v1/admin/administrators/add`;
 var api_list_admins_url = `${host_api}/api/v1/admin/administrators/list`;
 
 // GET ONE ADMIN INFO
-var api_get_one_admin_url = `${host_api}/api/v1/admin/administrators/get?admin_id=`;
+var api_get_dashboard_stats_url = `${host_api}/api/v1/admin/dashboard/get`;
 
 // UPDATE ONE ADMIN INFO
 var api_update_one_admin_url = `${host_api}/v1/admin/`;
