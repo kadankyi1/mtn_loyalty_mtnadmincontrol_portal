@@ -1,11 +1,11 @@
 <?php
 namespace App\Http\Controllers\Api\v1;
 
+use App\Models\v1\Merchant;
 use Illuminate\Http\Request;
 use App\Models\v1\Administrator;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\v1\Merchant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -394,7 +394,7 @@ public function add_merchant(Request $request)
     $validatedData = $request->validate([
         "merchant_name" => "bail|required|max:55",
         "merchant_phone_number" => "bail|required|regex:/(0)[0-9]{9}/|min:10|max:10",
-        "merchant_email" => "bail|email|max:100",
+        "merchant_email" => "bail|required|email|max:100",
         "merchant_location" => "bail|required",
         "admin_pin" => "bail|required|min:4|max:8",
     ]);
@@ -402,12 +402,73 @@ public function add_merchant(Request $request)
     $validatedData["merchant_scope"] = "merchant_view_redemptions merchant_accept_redemptions";
 
 
-
     $merchant = Merchant::where('merchant_phone_number', $request->merchant_phone_number)->first();
 
     if ($merchant != null && $merchant->merchant_phone_number == $request->merchant_phone_number) {
         return response(["status" => "fail", "message" => "The phone number is registered to another merchant."]);
     } else {
+
+        $create_vcode_user_client = new \GuzzleHttp\Client();
+
+        $response = $create_vcode_user_client->request(
+            'POST', 
+            'http://vstgh3.stakcloud.com/api/external/customer', 
+            [
+                'headers' => [
+                    'apiUser' => 'Loyalty', 
+                    'apiKey' => 'Loyalty123!',
+                ],
+                'form_params' => [
+                    'name' => $request->merchant_name, 
+                    'phone' => $request->merchant_phone_number, 
+                    'email' => $request->merchant_email, 
+                    'address' => $request->merchant_location, 
+                ]   
+        ]);
+
+
+        $statusCode = $response->getStatusCode();
+        $contents = $response->getBody()->getContents();
+        $contents = json_decode($contents,true);
+
+        if($statusCode == 200 && isset($contents['data']['id']) && $contents['data']['id'] > 0){
+            $vcode_user_id = $contents['data']['id'];
+        } else {
+            return response(["status" => "fail", "message" => "VCode user creation error. Failed to create merchant"]);
+        }
+
+        $description = "Mtn Merchant " . $request->merchant_phone_number;
+        
+        $create_vcode_for_vcode_user_client = new \GuzzleHttp\Client();
+
+        $response = $create_vcode_for_vcode_user_client->request(
+            'POST', 
+            'http://vstgh3.stakcloud.com/api/external/vcode', 
+            [
+                'headers' => [
+                    'apiUser' => 'Loyalty', 
+                    'apiKey' => 'Loyalty123!',
+                ],
+                'form_params' => [
+                    'description' => $description, 
+                    'quantity' => 1, 
+                    'customer_id' => $vcode_user_id, 
+                ]   
+        ]);
+
+
+        $statusCode = $response->getStatusCode();
+        $contents = $response->getBody()->getContents();
+        $contents = json_decode($contents,true);
+
+        if($statusCode == 200 && isset($contents['data']['message']) && $contents['data']['message'] == "Vcode created"){
+            $vcode_user_vcode = $contents['data']['vcodes'][0];
+            $vcode_user_vcode_link = $contents['data']['links'][0];
+        } else {
+            return response(["status" => "fail", "message" => "VCode creation error. Failed to create merchant"]);
+        }
+
+        
         $validatedData["merchant_pin"] = Hash::make(substr($request->merchant_phone_number,-4));
         $validatedData["password"] = bcrypt($request->merchant_phone_number);
         $validatedData["admin_id"] = auth()->user()->admin_id;
@@ -418,6 +479,9 @@ public function add_merchant(Request $request)
         $merchant->merchant_scope = $validatedData["merchant_scope"];
         $merchant->merchant_phone_number = $validatedData["merchant_phone_number"];
         $merchant->merchant_email = $validatedData["merchant_email"];
+        $merchant->merchant_vcode_user_id = $vcode_user_id;
+        $merchant->merchant_vcode = $vcode_user_vcode;
+        $merchant->merchant_vcode_link = $vcode_user_vcode_link;
         $merchant->merchant_pin = $validatedData["merchant_pin"];
         $merchant->password = $validatedData["password"];
         $merchant->merchant_flagged = false;
@@ -429,6 +493,7 @@ public function add_merchant(Request $request)
 
 
 }
+
 
 
 public function edit_merchant(Request $request)

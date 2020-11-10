@@ -1,20 +1,21 @@
 <?php
-$active_page = "Dashboard";
+$active_page = "Claims";
 ?>
 <!-- INCLUDING THE FILE THAT HOLDS THE CORE STRUCTURE OF THE PAGE -->
-@extends('mtnadministrator.app')
+@extends('merchant.app')
 
 <!-- INCLUDING CUSTOM SCRIPTS AND STYLES -->
 @section('top_scripts_and_styles')
-    <link rel="stylesheet" href="/css/mtnadministrator/custom.css">
-    <script src="/js/custom/mtnadministrator/config.js"></script>
-    <script src="/js/custom/mtnadministrator/auth.js"></script>
+    <link rel="stylesheet" href="/css/custom.css">
+    <script src="/js/custom/merchant/config.js"></script>
+    <script src="/js/custom/merchant/auth.js"></script>
 @endsection()
 
 @section('main_content_and_footer')
 <div class="main-content">
     <div class="container-fluid">
         <div class="row" id="stats_info">
+
             <div class="col-12 col-sm-6 col-xl">
                 <!-- Card -->
                 <div class="card box-margin">
@@ -23,14 +24,14 @@ $active_page = "Dashboard";
                             <div class="col">
                                 <!-- Title -->
                                 <h6 class="text-uppercase font-14">
-                                    Pending Claims
+                                    Balance
                                 </h6>
 
                                 <div class="d-flex justify-content-center">
-                                    <div id="loader2" class="customloader" ></div>
+                                    <div id="loader3" class="customloader" ></div>
                                 </div> 
                                 <!-- Heading -->
-                                <span class="font-24 text-dark mb-0" id="pending_claims" style="display: none;">
+                                <span class="font-24 text-dark mb-0" id="balance_now" style="display: none;">
                                     
                                 </span>
                             </div>
@@ -46,34 +47,6 @@ $active_page = "Dashboard";
                 </div>
             </div>
 
-            <div class="col-12 col-sm-6 col-xl">
-                <!-- Card -->
-                <div class="card box-margin">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <!-- Title -->
-                                <h6 class="font-14 text-uppercase">
-                                    Vendors
-                                </h6>
-                                <!-- Heading -->
-                                <div class="d-flex justify-content-center">
-                                    <div id="loader3" class="customloader" ></div>
-                                </div> 
-                                <span class="font-24 text-dark mb-0" id="vendors"  style="display: none;">
-                                    
-                                </span>
-                            </div>
-                            <div class="col-auto">
-                                <!-- Icon -->
-                                <div class="icon">
-                                    <img src="img/bg-img/icon-9.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="col-12 col-sm-6 col-xl">
                 <!-- Card -->
@@ -82,20 +55,17 @@ $active_page = "Dashboard";
                         <div class="row align-items-center">
                             <div class="col">
                                 <!-- Title -->
-                                <h6 class="font-14 text-uppercase">
-                                    Cedi To Points Rate
+                                <h6 class="text-uppercase font-14">
+                                    Pending Claims
                                 </h6>
+
                                 <div class="d-flex justify-content-center">
-                                    <div id="loader4" class="customloader" ></div>
+                                    <div id="loader2" class="customloader" ></div>
                                 </div> 
-                                <div class="row align-items-center no-gutters">
-                                    <div class="col-auto">
-                                        <!-- Heading -->
-                                        <span class="font-24 text-dark mr-0" id="points_rate_holder" style="display: none;">
-                                            GH¢1 = <span id="points_rate">100</span> Pts
-                                        </span>
-                                    </div>
-                                </div>
+                                <!-- Heading -->
+                                <span class="font-24 text-dark mb-0" id="pending_redemptions" style="display: none;">
+                                    
+                                </span>
                             </div>
 
                             <div class="col-auto">
@@ -108,6 +78,7 @@ $active_page = "Dashboard";
                     </div>
                 </div>
             </div>
+
         </div>
         <!-- / .row -->
 
@@ -116,19 +87,16 @@ $active_page = "Dashboard";
             <div class="col-md-12 col-xl-12 height-card box-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title mb-30">Pending Claims</h6>
+                        <h6 class="card-title mb-30">Claims</h6>
                         <div class="table-responsive">
                             <table class="table table-nowrap table-hover mb-0" id="dataTableExample">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Merchant-Name</th>
-                                        <th>Merchant-Phone</th>
                                         <th>Claim-Amount</th>
                                         <th>Status</th>
                                         <th>Admin-Name</th>
                                         <th>Created-By</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="table_body_list">
@@ -190,9 +158,9 @@ $active_page = "Dashboard";
     <script src="/js/default-assets/active.js"></script>
 
     <!-- CUSTOMJS -->
-    <script src="/js/custom/mtnadministrator/dashboard/dashboard.js"></script>
+    <script src="/js/custom/merchant/claims/claims.js"></script>
     <script type="text/javascript">
-        get_dashboard_info();
+        get_claims_info();
     </script>
     
 @endsection

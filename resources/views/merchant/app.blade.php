@@ -51,7 +51,7 @@
         <div class="ecaps-sidemenu-area">
             <!-- Desktop Logo -->
             <div class="ecaps-logo">
-                <a href="index.html"><img class="desktop-logo" src="/img/core-img/logo.png" alt="Desktop Logo"> <img class="small-logo" src="/img/core-img/small-logo.png" alt="Mobile Logo"></a>
+                <a href="<?php echo url('/'); ?>/dashboard" ><img style="height: 50px; max-height: 50px; width: 100px;" src="/img/core-img/logo.png" alt="Desktop Logo"> <img class="small-logo" src="/img/core-img/logo.png" alt="Mobile Logo"></a>
             </div>
 
             <!-- Side Nav -->
@@ -61,20 +61,15 @@
                     <!-- Sidebar Menu -->
                     <nav>
                         <ul class="sidebar-menu" data-widget="tree">             
-                            <li  <?php if(isset($active_page) && $active_page == 'Dashboard'){ echo 'class="active"'; } ?> ><a href="index.html"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-                            <li <?php if(isset($active_page) && $active_page == 'Reports'){ echo 'class="active"'; } ?>><a href="calendar.html"><i class="fa fa-bar-chart"></i> <span>Reports</span></a></li>
-                            <li class="treeview <?php if(isset($active_page) && $active_page == 'Merchants'){ echo 'active'; } ?>">
-                                <a href="javascript:void(0)"><i class="fa fa-building-o"></i><span>Merchants</span> <i class="fa fa-angle-right"></i></a>
+                            <li  <?php if(isset($active_page) && $active_page == 'Dashboard'){ echo 'class="active"'; } ?> ><a href="<?php echo url('/'); ?>/dashboard"><i class="fa fa-dashboard"  style="color: black;
+                            "></i> <span>Dashboard</span></a></li>
+                            <li <?php if(isset($active_page) && $active_page == 'Redemptions'){ echo 'class="active"'; } ?>><a href="<?php echo url('/'); ?>/merchant/redemptions/search"><i class="fa fa-check-square-o" aria-hidden="true"  style="color: black;"></i><span>Redemptions</span></a></li>
+                            
+                            <li class="treeview <?php if(isset($active_page) && $active_page == 'Claims'){ echo 'active'; } ?>">
+                                <a href="javascript:void(0)"><i class="fa fa-cloud-download" aria-hidden="true"  style="color: black;"></i> <span>Claims</span></a>
                                 <ul class="treeview-menu">
-                                    <li><a href="<?php echo url('/'); ?>/merchants/add">Add</a></li>
-                                    <li><a href="<?php echo url('/'); ?>/merchants/list">View</a></li>
-                                </ul>
-                            </li>
-                            <li class="treeview <?php if(isset($active_page) && $active_page == 'Administrators'){ echo 'active'; } ?>">
-                                <a href="javascript:void(0)"><i class="fa fa-users"></i> <span>Administrators</span> <i class="fa fa-angle-right"></i></a>
-                                <ul class="treeview-menu">
-                                    <li><a href="<?php echo url('/'); ?>/administrators/add">Add</a></li>
-                                    <li><a href="<?php echo url('/'); ?>/administrators/list">View</a></li>
+                                    <li><a href="<?php echo url('/'); ?>/merchant/claims/add">Add</a></li>
+                                    <li><a href="<?php echo url('/'); ?>/merchant/claims">View</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -119,7 +114,6 @@
                             <div class="dropdown-menu dropdown-menu-right">
                                 <!-- User Profile Area -->
                                 <div class="user-profile-area">
-                                    <a href="<?php echo url('/'); ?>/password/change" class="dropdown-item"><i class="zmdi zmdi-brightness-7 profile-icon" aria-hidden="true"></i> Change Password</a>
                                     <a  onclick="user_token_is_no_longer_valid();" style="cursor: pointer" class="dropdown-item"><i class="ti-unlink profile-icon" aria-hidden="true"></i> Sign-out</a>
                                 </div>
                             </div>

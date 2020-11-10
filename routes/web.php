@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/admin/', function () {
+Route::get('/admin', function () {
     return view('mtnadministrator/login');
 });
 
@@ -103,3 +103,46 @@ Route::get('/admin/password/change', function () {
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+/*
+|--------------------------------------------------------------------------
+| LOGIN 
+|--------------------------------------------------------------------------
+|
+*/
+Route::get('/', function () {
+    return view('merchant/login');
+});
+
+Route::get('/merchant', function () {
+    return view('merchant/login');
+});
+
+Route::get('/merchant/login', function () {
+    return view('merchant/login');
+});
+
+Route::get('/login', function () {
+    return view('merchant/login');
+});
+
+/*
+|--------------------------------------------------------------------------
+| DASHBOARD
+|--------------------------------------------------------------------------
+|
+*/
+Route::get('/dashboard', function () {
+    return view('merchant/dashboard');
+});
+
+Route::get('/merchant/redemptions/search', function () {
+    return view('merchant/redemptions/search');
+});
+
+Route::get('/merchant/claims', function () {
+    return view('merchant/claims/list');
+});
+Route::get('/merchant/claims/add', function () {
+    return view('merchant/claims/add');
+});

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| ADMIN API Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
@@ -39,6 +39,45 @@ Route::middleware(['auth:api', 'scope:admin_view_redemptions'])->get('/v1/admin/
 
 Route::middleware(['auth:api'])->get('/v1/admin/dashboard/get', 'Api\v1\AdminController@get_dashboard');
 
+
+
+
+/*
+|--------------------------------------------------------------------------
+| MERCHANT API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
+Route::post('/v1/merchant/login', 'Api\v1\MerchantController@login');
+
+Route::middleware(['auth:merchant'])->get('/v1/merchant/dashboard/get', 'Api\v1\MerchantController@get_dashboard');
+
+Route::middleware(['auth:merchant'])->get('/v1/merchant/redemptions/search', 'Api\v1\MerchantController@get_redemptions');
+
+Route::middleware(['auth:merchant'])->get('/v1/merchant/redemptions/update', 'Api\v1\MerchantController@update_redemption');
+
+Route::middleware(['auth:merchant'])->get('/v1/merchant/claims/list', 'Api\v1\MerchantController@get_claims');
+
+Route::middleware(['auth:merchant'])->post('/v1/merchant/claims/add', 'Api\v1\MerchantController@make_claim');
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| CUSTOMER API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
 
 // ----------------------------------------------------------------------------//
 Route::post('/v1/customer/register', 'Api\v1\CustomerController@register');

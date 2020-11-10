@@ -8,6 +8,7 @@ $active_page = "Dashboard";
 @section('top_scripts_and_styles')
     <link rel="stylesheet" href="/css/mtnadministrator/custom.css">
     <script src="/js/custom/mtnadministrator/config.js"></script>
+    <script src="/js/custom/mtnadministrator/auth.js"></script>
 @endsection()
 
 @section('main_content_and_footer')

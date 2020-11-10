@@ -19,6 +19,9 @@ class CreateCustomersTable extends Migration
             $table->string('customer_name', 255);
             $table->string('customer_phone_number', 255)->unique();
             $table->unsignedBigInteger('points')->default('0');
+            $table->string('customer_vcode_user_id', 255);
+            $table->string('customer_vcode', 255);
+            $table->string('customer_vcode_link', 255);
             $table->string('customer_pin', 255);
             $table->boolean('customer_flagged');
             $table->timestamps();

@@ -78,6 +78,7 @@ function search_merchant_success_response_function(response)
         $("#merchant_phone_number2").html(element.merchant_phone_number);
         $("#merchant_email").html(element.merchant_email);
         $("#created_at").html(element.created_at);
+        $("#merchant_vcode_img").attr('src', element.merchant_vcode_link);
 
         $("#merchant_pending_claims").html(element.merchant_unpaid_claims);
         $("#merchant_balance").html(element.merchant_balance);

@@ -4,14 +4,14 @@
 
 ****************************************/
 
-var hostweb = "http://mtnloyaltymerchant";
+var hostweb = "http://mtncustomerloyalty";
 var show_logging_in_console = "true"
 
 // LOGIN PAGE URL
-var web_login_url = `${hostweb}/`;
+var web_login_url = `${hostweb}/login`;
 
 // INDEX PAGE URL
-var web_home_url = `${hostweb}/user/home`;
+var web_home_url = `${hostweb}/dashboard`;
 
 /****************************************
     
@@ -19,27 +19,29 @@ var web_home_url = `${hostweb}/user/home`;
 
 ****************************************/
 
-var host_api = "http://35.239.52.33";
+var host_api = "http://mtncustomerloyalty";
 
 // LOGIN PAGE URLS
-var api_login_url = `${host_api}/login`;
-var api_user_info_url = `${host_api}/me`;
+var api_merchant_login_url = `${host_api}/api/v1/merchant/login`;
+//var api_user_info_url = `${host_api}/me`;
 
-// CREATE ADMIN OR MERCHANT
-var api_create_user_url = `${host_api}/register`;
+
 
 // LIST ADMINS
-var api_list_admins_url = `${host_api}/v1/admin`;
+var api_list_admins_url = `${host_api}/api/v1/admin/administrators/list`;
 
 // GET ONE ADMIN INFO
-var api_get_one_admin_url = `${host_api}/v1/admin/`;
+var api_get_dashboard_stats_url = `${host_api}/api/v1/merchant/dashboard/get`;
+
+var api_get_claims_url = `${host_api}/api/v1/merchant/claims/list`;
+
+var api_add_claim_url = `${host_api}/api/v1/merchant/claims/add`;
 
 // UPDATE ONE ADMIN INFO
-var api_update_one_admin_url = `${host_api}/v1/admin/`;
+var api_get_redemptions = `${host_api}/api/v1/merchant/redemptions/search`;
 
-
-// LIST MERCHANTS
-var api_list_merchants_url = `${host_api}/v1/merchant`;
+// UPDATE ONE ADMIN INFO
+var api_update_redemption = `${host_api}/api/v1/merchant/redemptions/update`;
 
 
 // CHANGE PASSWORD
@@ -60,14 +62,15 @@ function show_log_in_console(log){
 function user_has_api_token()
 {
     if(
-        (localStorage.getItem("access_token") != null && localStorage.getItem("refresh_token") != null) 
-        && 
-        (localStorage.getItem("access_token").trim() != "" && localStorage.getItem("refresh_token").trim() != ""))
-        {
-            return true;
-        } else {
-            return false;
-        }
+        (localStorage.getItem("access_token") != null && localStorage.getItem("access_token").trim() != "")
+         && (localStorage.getItem("merchant_name") != null && localStorage.getItem("merchant_name").trim() != "")
+    
+    )
+    {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
@@ -160,13 +163,12 @@ function send_request_to_server_from_form(method, url_to_server, form_data, data
         url: url_to_server,
         data:  form_data,
         dataType: data_type,
-        success: function(response, textStatus, xhr){ 
+        success: function(response){ 
             show_log_in_console(response);
-            show_log_in_console("textStatus: " + textStatus);
-            if(textStatus == "success"){
+            if(response.status.trim() == "success"){
                 success_response_function(response);
             } else {
-                error_response_function(response);
+                error_response_function(response.message);
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -180,29 +182,26 @@ function send_restapi_request_to_server_from_form(method, url_to_server, authori
 {
     $.ajax({
         type: method,
-        url: url_to_server,
-        headers: { 
-            'Authorization': authorization,
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
+        url: url_to_server,headers: {
+            'Authorization': authorization
          },
-        data: form_data,
-        success: function(response, textStatus, xhr){ 
+        data:  form_data,
+        dataType: data_type,
+        success: function(response){ 
             show_log_in_console(response);
-            show_log_in_console("textStatus: " + textStatus);
+
             if(response == "Unauthorized"){
                 user_token_is_no_longer_valid();
                 return;
             } 
-            if(textStatus == "success"){
+            if(response.status.trim() == "success"){
                 success_response_function(response);
             } else {
-                error_response_function(response);
+                error_response_function(response.message);
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             show_log_in_console(errorThrown);
-            show_log_in_console("textStatus2: " + textStatus);
             if(errorThrown == "Unauthorized"){
                 user_token_is_no_longer_valid();
                 return;

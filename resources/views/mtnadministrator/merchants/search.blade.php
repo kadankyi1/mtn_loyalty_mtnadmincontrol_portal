@@ -44,7 +44,7 @@ $active_page = "Merchants";
         <div class="row">
             <div class="col-12 col-md-4">
                 <div class="card mb-30">
-                    <img src="https://images.squarespace-cdn.com/content/v1/5800d9668419c2e2687202fb/1490082806442-CSGARE6B10QOBTX4MSZM/ke17ZwdGBToddI8pDm48kFooXVAIdtyZE6mtXN3sLjpZw-zPPgdn4jUwVcJE1ZvWEtT5uBSRWt4vQZAgTJucoTqqXjS3CfNDSuuf31e0tVHWOYm4wyK8I8kOZLgz5KpEQjP0el7Sq3g3LAIv9ljyiFtO8nJtk629tZGIWiyY3XQ/image-asset.png" class="profile-cover-img" alt="Vcode Image">
+                    <img id="merchant_vcode_img" class="profile-cover-img" alt="Vcode Image">
                 </div>
                 <!-- ./profile -->
 

@@ -22,11 +22,15 @@ class CreateMerchantsTable extends Migration
             $table->string('merchant_phone_number', 255)->unique();
             $table->string('merchant_email', 255);
             $table->decimal('merchant_balance', 10, 2)->default('0');
+            $table->string('merchant_vcode_user_id', 255);
+            $table->string('merchant_vcode', 255);
+            $table->string('merchant_vcode_link', 255);
             $table->string('merchant_pin', 255);
             $table->string('password', 255);
             $table->boolean('merchant_flagged');
             $table->timestamps();
         });
+
 
         Schema::table('merchants', function (Blueprint $table) {
             $table->unsignedBigInteger('admin_id');

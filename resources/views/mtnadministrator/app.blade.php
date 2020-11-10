@@ -51,7 +51,7 @@
         <div class="ecaps-sidemenu-area">
             <!-- Desktop Logo -->
             <div class="ecaps-logo" >
-                <a href="index.html" ><img style="height: 50px; max-height: 50px; width: 100px;" src="/img/core-img/logo.png" alt="Desktop Logo"> <img class="small-logo" src="/img/core-img/logo.png" alt="Mobile Logo"></a>
+                <a href="<?php echo url('/'); ?>/admin/dashboard" ><img style="height: 50px; max-height: 50px; width: 100px;" src="/img/core-img/logo.png" alt="Desktop Logo"> <img class="small-logo" src="/img/core-img/logo.png" alt="Mobile Logo"></a>
             </div>
 
             <!-- Side Nav -->

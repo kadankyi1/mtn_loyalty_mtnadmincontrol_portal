@@ -11,7 +11,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Admin: Mtn Loyalty</title>
+    <title>Merchant: Mtn Loyalty</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/img/core-img/favicon.png">
@@ -20,8 +20,8 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/css/custom.css">
 
-    <script src="/js/custom/config.js"></script>
-    <script src="/js/custom/login/auth.js"></script>
+    <script src="/js/custom/merchant/config.js"></script>
+    <script src="/js/custom/merchant/login/auth.js"></script>
 
 </head>
 
@@ -64,9 +64,9 @@
                                 <div class="d-flex justify-content-center">
                                     <div id="loader" class="customloader" style="display: none;"></div>
                                 </div> 
-                                <form id="form">
+                                <form id="form" method="POST">
                                     <div class="form-group">
-                                        <input class="form-control login" type="text" name="username" id="emailaddress" required="" placeholder="Enter username">
+                                        <input class="form-control login" type="text" name="merchant_phone_number" id="merchant_phone_number" required="" placeholder="Enter phone number">
                                     </div>
 
                                     <div class="form-group">
@@ -100,7 +100,7 @@
     <script src="/js/default-assets/active.js"></script>
 
     <!-- CUSTOMJS -->
-    <script src="/js/custom/login/login.js"></script>
+    <script src="/js/custom/merchant/login/login.js"></script>
 
 </body>
 
