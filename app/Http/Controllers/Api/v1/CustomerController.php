@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\v1\Customer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -35,11 +36,34 @@ class CustomerController extends Controller
         $validatedData["customer_phone_number"] = "0540000019";
         $validatedData["customer_pin"] = "1234";
     
+        $last_redemption ="Unavailable";
         $customer = Customer::where('customer_phone_number', $validatedData["customer_phone_number"])->first();
     
         if ($customer != null && $customer->customer_phone_number == $validatedData["customer_phone_number"]) {
             $accessToken = $customer->createToken("authToken")->accessToken;
-            return response(["status" => "success", "message" => "customer added successsfully.", "customer" => $customer, "access_token" => $accessToken]);
+
+            $where_array = array(
+                ['customer_id', '=',  $customer->customer_id],
+                ['merchant_id', '=',  auth()->user()->merchant_id],
+            ); 
+
+            $redemptions = DB::table('redemptions')
+            ->select('redemptions.*')
+            ->where($where_array)
+            ->orderBy('redemption_id', 'desc') 
+            ->get();
+
+            
+            if($redemptions[0]->created_at != null && $redemptions[0]->created_at != ""){
+                $last_redemption = $redemptions[0]->created_at;
+            }
+            return response([
+                "status" => "success", 
+                "message" => "customer added successsfully.", 
+                "customer" => $customer,
+                "access_token" => $accessToken,
+                "last_redemption" => $last_redemption
+                ]);
 
         } else {
 
@@ -117,6 +141,23 @@ class CustomerController extends Controller
     
             $customer = Customer::create($validatedData);
             $accessToken = $customer->createToken("authToken")->accessToken;
+
+            $where_array = array(
+                ['customer_id', '=',  $customer->customer_id],
+                ['merchant_id', '=',  auth()->user()->merchant_id],
+            ); 
+
+            $redemptions = DB::table('redemptions')
+            ->select('redemptions.*')
+            ->where($where_array)
+            ->orderBy('redemption_id', 'desc') 
+            ->get();
+
+            
+            if($redemptions[0]->created_at != null && $redemptions[0]->created_at != ""){
+                $last_redemption = $redemptions[0]->created_at;
+            }
+            
             return response(["status" => "success", "message" => "customer added successsfully.", "customer" => $customer, "access_token" => $accessToken]);
         }
     
