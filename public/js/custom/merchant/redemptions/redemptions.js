@@ -10,7 +10,7 @@ $(document).ready(function ()
         var url = api_get_redemptions + "?=" + form_data;
         var bearer = "Bearer " + localStorage.getItem("access_token"); 
         show_log_in_console("url: " + url);
-        send_restapi_request_to_server_from_form("get", url, bearer, form_data, "json", get_redemptions_success_response_function, get_redemptions_error_response_function);
+        send_restapi_request_to_server_from_form("get", url, bearer, "", "json", get_redemptions_success_response_function, get_redemptions_error_response_function);
     });
 
     
