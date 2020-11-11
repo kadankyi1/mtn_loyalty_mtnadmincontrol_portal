@@ -33,7 +33,7 @@ class CustomerController extends Controller
         ]);
 
         $validatedData["customer_name"] = "Dankyi Anno Kwaku";
-        $validatedData["customer_phone_number"] = "0540000022";
+        $validatedData["customer_phone_number"] = "0540000023";
         $validatedData["customer_pin"] = "1234";
     
         $last_redemption ="Unavailable";
@@ -57,6 +57,7 @@ class CustomerController extends Controller
                 $date=date_create($redemptions[0]->created_at);
                 $last_redemption = date_format($date,"M j Y");
             }
+            
             return response([
                 "status" => "success", 
                 "message" => "customer added successsfully.", 
@@ -158,7 +159,13 @@ class CustomerController extends Controller
                 $last_redemption = date_format($date,"M j Y");
             }
 
-            return response(["status" => "success", "message" => "customer added successsfully.", "customer" => $customer, "access_token" => $accessToken]);
+            return response([
+                "status" => "success", 
+                "message" => "customer added successsfully.", 
+                "customer" => $customer, 
+                "access_token" => $accessToken, 
+                "last_redemption" => $last_redemption
+                ]);
         }
     
     
