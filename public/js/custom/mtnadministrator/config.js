@@ -4,7 +4,7 @@
 
 ****************************************/
 
-var hostweb = "http://mtncustomerloyalty";
+var hostweb = "http://104.156.237.47/";
 var show_logging_in_console = "true"
 
 // LOGIN PAGE URL
@@ -19,7 +19,7 @@ var web_home_url = `${hostweb}/admin/dashboard`;
 
 ****************************************/
 
-var host_api = "http://mtncustomerloyalty";
+var host_api = "http://104.156.237.47/";
 
 // LOGIN PAGE URLS
 var api_admin_login_url = `${host_api}/api/v1/admin/login`;

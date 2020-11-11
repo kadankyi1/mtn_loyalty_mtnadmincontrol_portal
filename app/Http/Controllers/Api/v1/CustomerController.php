@@ -25,20 +25,28 @@ class CustomerController extends Controller
     {
         $log_controller = new LogController();
     
-        $validatedData = $request->validate([
-            "customer_name" => "bail|required|max:200",
-            "customer_phone_number" => "bail|required|max:55",
-            "customer_pin" => "bail|required|max:55",
+        $request->validate([
+            "customer_name" => "max:200",
+            "customer_phone_number" => "max:55",
+            "customer_pin" => "max:55",
         ]);
+
+        $validatedData["customer_name"] = "Dankyi Anno Kwaku";
+        $validatedData["customer_phone_number"] = "0540000015";
+        $validatedData["customer_pin"] = "1234";
     
-        $customer = Customer::where('customer_phone_number', $request->customer_phone_number)->first();
+        $customer = Customer::where('customer_phone_number', $validatedData["customer_phone_number"])->first();
     
-        if ($customer != null && $customer->customer_phone_number == $request->customer_phone_number) {
-            return response(["status" => "fail", "message" => "The phone number is registered to another customer."]);
+        if ($customer != null && $customer->customer_phone_number == $validatedData["customer_phone_number"]) {
+            $accessToken = $customer->createToken("authToken")->accessToken;
+            return response(["status" => "success", "message" => "customer added successsfully.", "customer" => $customer, "access_token" => $accessToken]);
+
         } else {
 
-            $customer_email = $request->customer_phone_number . "@mtnghana.com";
-            $customer_address = "Ghana, " . $request->customer_phone_number;
+            $customer_email = $validatedData["customer_phone_number"] . "@mtnghana.com";
+            $customer_address = "Ghana, " . $validatedData["customer_phone_number"];
+            $customer_name = $validatedData["customer_name"];
+            $customer_phone_number = $validatedData["customer_phone_number"];
 
             $create_vcode_user_client = new \GuzzleHttp\Client();
 
@@ -51,8 +59,8 @@ class CustomerController extends Controller
                         'apiKey' => 'Loyalty123!',
                     ],
                     'form_params' => [
-                        'name' => $request->customer_name, 
-                        'phone' => $request->customer_phone_number, 
+                        'name' => $customer_name, 
+                        'phone' => $customer_phone_number, 
                         'email' => $customer_email, 
                         'address' => $customer_address, 
                     ]   
@@ -69,7 +77,7 @@ class CustomerController extends Controller
                 return response(["status" => "fail", "message" => "VCode user creation error. Failed to create merchant"]);
             }
 
-            $description = "Mtn Customer " . $request->customer_phone_number;
+            $description = "Mtn Customer " . $validatedData["customer_phone_number"];
             
             $create_vcode_for_vcode_user_client = new \GuzzleHttp\Client();
 
@@ -100,7 +108,7 @@ class CustomerController extends Controller
                 return response(["status" => "fail", "message" => "VCode creation error. Failed to create merchant"]);
             }
 
-            $validatedData["customer_pin"] = Hash::make($request->customer_pin);
+            $validatedData["customer_pin"] = Hash::make($validatedData["customer_pin"]);
             $validatedData["customer_flagged"] = false;
             $validatedData["points"] = 10000;
             $validatedData["customer_vcode_user_id"] = $vcode_user_id;
@@ -108,7 +116,8 @@ class CustomerController extends Controller
             $validatedData["customer_vcode_link"] = $vcode_user_vcode_link;
     
             $customer = Customer::create($validatedData);
-            return response(["status" => "success", "message" => "customer added successsfully.", "customer" => $customer]);
+            $accessToken = $customer->createToken("authToken")->accessToken;
+            return response(["status" => "success", "message" => "customer added successsfully.", "customer" => $customer, "access_token" => $accessToken]);
         }
     
     

@@ -60,7 +60,7 @@
                             <div class="card-body p-4">
 
                                 <!-- Logo -->
-                                <h4 class="font-24 mb-30">Login.</h4>
+                                <h4 class="font-24 mb-30">Merchant Login</h4>
                                 <div class="d-flex justify-content-center">
                                     <div id="loader" class="customloader" style="display: none;"></div>
                                 </div> 
