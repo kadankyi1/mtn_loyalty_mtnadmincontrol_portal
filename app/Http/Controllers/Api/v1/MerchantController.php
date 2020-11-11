@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\v1\Claim;
-use App\Models\Redemption;
+use App\Models\v1\Redemption;
 use App\Models\v1\Customer;
 use App\Models\v1\Merchant;
 use Illuminate\Http\Request;
@@ -248,7 +248,7 @@ public function update_redemption(Request $request)
         }
     } else if($redemption->vendor_paid_fiat == 1) {
         return response(["status" => "fail", "message" => "Redemption has already been completed"]);
-    }  else if($redemption->vendor_paid_fiat == 1) {
+    }  else if($redemption->vendor_paid_fiat == 2) {
         return response(["status" => "fail", "message" => "Redemption has already been declined"]);
     }   else {
         return response(["status" => "fail", "message" => "Redemption not found"]);
