@@ -33,7 +33,7 @@ class CustomerController extends Controller
         ]);
 
         $validatedData["customer_name"] = "Dankyi Anno Kwaku";
-        $validatedData["customer_phone_number"] = "0540000019";
+        $validatedData["customer_phone_number"] = "0540000020";
         $validatedData["customer_pin"] = "1234";
     
         $last_redemption ="Unavailable";
@@ -44,7 +44,6 @@ class CustomerController extends Controller
 
             $where_array = array(
                 ['customer_id', '=',  $customer->customer_id],
-                ['merchant_id', '=',  auth()->user()->merchant_id],
             ); 
 
             $redemptions = DB::table('redemptions')
@@ -54,8 +53,9 @@ class CustomerController extends Controller
             ->get();
 
             
-            if($redemptions[0]->created_at != null && $redemptions[0]->created_at != ""){
-                $last_redemption = $redemptions[0]->created_at;
+            if(isset($redemptions[0]) && $redemptions[0]->created_at != ""){
+                $date=date_create($redemptions[0]->created_at);
+                $last_redemption = date_format($date,"M j Y");
             }
             return response([
                 "status" => "success", 
@@ -144,7 +144,6 @@ class CustomerController extends Controller
 
             $where_array = array(
                 ['customer_id', '=',  $customer->customer_id],
-                ['merchant_id', '=',  auth()->user()->merchant_id],
             ); 
 
             $redemptions = DB::table('redemptions')
@@ -154,10 +153,11 @@ class CustomerController extends Controller
             ->get();
 
             
-            if($redemptions[0]->created_at != null && $redemptions[0]->created_at != ""){
-                $last_redemption = $redemptions[0]->created_at;
+            if(isset($redemptions[0]) && $redemptions[0]->created_at != ""){
+                $date=date_create($redemptions[0]->created_at);
+                $last_redemption = date_format($date,"M j Y");
             }
-            
+
             return response(["status" => "success", "message" => "customer added successsfully.", "customer" => $customer, "access_token" => $accessToken]);
         }
     
