@@ -611,7 +611,7 @@ public function search_one_merchant(Request $request)
     
         $where_array = array(
             ['paid_status', '=',  0],
-            ['merchant_id', '=',  $this_merchant[0]->admin_id],
+            ['merchant_id', '=',  $this_merchant[0]->merchant_id],
             ['claim_flagged', '=',  0],
         );     
 
