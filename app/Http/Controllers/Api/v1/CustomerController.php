@@ -32,7 +32,7 @@ class CustomerController extends Controller
         ]);
 
         $validatedData["customer_name"] = "Dankyi Anno Kwaku";
-        $validatedData["customer_phone_number"] = "0540000015";
+        $validatedData["customer_phone_number"] = "0540000019";
         $validatedData["customer_pin"] = "1234";
     
         $customer = Customer::where('customer_phone_number', $validatedData["customer_phone_number"])->first();
