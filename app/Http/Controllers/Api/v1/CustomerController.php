@@ -33,7 +33,7 @@ class CustomerController extends Controller
         ]);
 
         $validatedData["customer_name"] = "Dankyi Anno Kwaku";
-        $validatedData["customer_phone_number"] = "0540000020";
+        $validatedData["customer_phone_number"] = "0540000022";
         $validatedData["customer_pin"] = "1234";
     
         $last_redemption ="Unavailable";
