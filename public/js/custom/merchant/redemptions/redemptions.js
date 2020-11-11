@@ -10,7 +10,7 @@ $(document).ready(function ()
         var url = api_get_redemptions + "?=" + form_data;
         var bearer = "Bearer " + localStorage.getItem("access_token"); 
         show_log_in_console("url: " + url);
-        send_restapi_request_to_server_from_form("get", url, bearer, "", "json", get_redemptions_success_response_function, get_redemptions_error_response_function);
+        send_restapi_request_to_server_from_form("get", url, bearer, form_data, "json", get_redemptions_success_response_function, get_redemptions_error_response_function);
     });
 
     
@@ -34,7 +34,7 @@ $(document).ready(function ()
         var url = api_update_redemption + "?=" + form_data;
         var bearer = "Bearer " + localStorage.getItem("access_token"); 
         show_log_in_console("url: " + url);
-        send_restapi_request_to_server_from_form("get", url, bearer, form_data, "json", update_redemption_success_response_function, update_redemption_error_response_function);
+        send_restapi_request_to_server_from_form("get", url, bearer, "", "json", update_redemption_success_response_function, update_redemption_error_response_function);
     
         //pay_url = host_api + '/api/v1/merchant/redemptions/update?=redemption_id=' + element.redemption_id;
         //redirect_to_next_page((this).getAttribute("data-url"), true);
