@@ -392,7 +392,7 @@ public function make_redemption(Request $request)
     $redemption->customer_phone = $customer->customer_phone_number; 
     $redemption->points_to_one_cedi_rate_used = $points_to_one_cedi; 
     $redemption->redeemed_points = $request->points; 
-    $redemption->points_to_one_cedi_rate_used = $points_to_one_cedi; 
+    $redemption->redemption_cedi_equivalent_paid = $redemption_amt; 
     $redemption->vendor_paid_fiat = 0; 
     $redemption->save();
 
