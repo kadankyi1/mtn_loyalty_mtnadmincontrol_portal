@@ -619,7 +619,12 @@ public function search_one_merchant(Request $request)
         ->selectRaw('count(*)')
         ->where($where_array)
         ->get();    
-        $unpaid_claims = (array) $unpaid_claims[0];
+
+        if($unpaid_claims[0] != null){
+            $unpaid_claims = (array) $unpaid_claims[0];
+        } else {
+            $unpaid_claims = 0;
+        }
     
     }
 
