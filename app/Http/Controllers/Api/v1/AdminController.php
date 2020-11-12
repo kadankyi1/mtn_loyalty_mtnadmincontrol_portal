@@ -631,6 +631,7 @@ public function search_one_merchant(Request $request)
     }
 
     $this_merchant[0]->admin_fullname = $admin_fullname;
+    $this_merchant[0]->merchant_unpaid_claims = $unpaid_claims;
     
     return response([
         "status" => "success", 
