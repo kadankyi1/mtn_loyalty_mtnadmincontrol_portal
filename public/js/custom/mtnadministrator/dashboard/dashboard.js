@@ -1,4 +1,29 @@
 
+$(document).ready(function () 
+{    
+    /*
+    |--------------------------------------------------------------------------
+    | WHEN AN ADMIN IS CLICKED, WE SEND THE USER TO THE EDIT PAGE
+    |--------------------------------------------------------------------------
+    | FOR SOME REASON, I COULD NOT PUT AN <A> TAG DIRECTLY IN THE TABLE
+    |--------------------------------------------------------------------------
+    |
+    */
+    $(document).on('click', '.pay-icon', function () {
+
+        show_notification("msg_holder", "success", "", "Vendor has been credited the amount via MoMo on their mobile number");
+    //pay_url = host_api + '/api/v1/merchant/redemptions/update?=redemption_id=' + element.redemption_id;
+    //redirect_to_next_page((this).getAttribute("data-url"), true);
+});
+$(document).on('click', '.decline-icon', function () {
+
+        show_notification("msg_holder", "success", "", "Vendor has been alerted of the decline via SMS");
+    //pay_url = host_api + '/api/v1/merchant/redemptions/update?=redemption_id=' + element.redemption_id;
+    //redirect_to_next_page((this).getAttribute("data-url"), true);
+});
+
+});
+
 /*
 |--------------------------------------------------------------------------
 | GETTING A SINGLE ADMIN TO BE EDITED AND IT'S RESPONSE FUNCTIONS
@@ -28,7 +53,7 @@ function get_dashboard_info_success_response_function(response)
                         var action = '';
                     } else if(element.paid_status == 0){
                         var status = '<span class="badge badge-info">Pending</span>';
-                        var action = '<img id="pay_icon" style="height:30px; width:30px;" src="/img/tick.png" />   <img id="decline_icon" style="height:30px; width:30px;" src="/img/wrong.png" />'
+                        var action = '<img id="pay_icon" class="pay-icon" style="height:30px; width:30px; cursor: pointer;" src="/img/tick.png" />   <img id="decline_icon"  class="decline-icon" style="height:30px; width:30px; cursor: pointer;" src="/img/wrong.png" />'
                     } else {
                         var status = '<span class="badge badge-danger">Declined</span>';
                         var action = '';
