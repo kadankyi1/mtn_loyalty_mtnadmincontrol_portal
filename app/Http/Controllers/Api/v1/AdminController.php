@@ -620,7 +620,7 @@ public function search_one_merchant(Request $request)
         ->where($where_array)
         ->get();    
 
-        if(!isset($unpaid_claims[0])){
+        if(isset($unpaid_claims[0])){
             $unpaid_claims = (array) $unpaid_claims[0];
             $this_merchant[0]->merchant_unpaid_claims = $unpaid_claims["count(*)"];
         } else {
