@@ -16,7 +16,7 @@ class CreateRedemptionsTable extends Migration
     {
         Schema::create('redemptions', function (Blueprint $table) {
             $table->bigIncrements('redemption_id');
-            $table->string('customer_phone', 255)->unique();
+            $table->string('customer_phone', 255);
             $table->unsignedBigInteger('points_to_one_cedi_rate_used');
             $table->unsignedBigInteger('redeemed_points');
             $table->string('redemption_cedi_equivalent_paid', 255);
@@ -32,7 +32,6 @@ class CreateRedemptionsTable extends Migration
             $table->foreign('merchant_id')->references('merchant_id')->on('merchants');
         });
     }
-
     /**
      * Reverse the migrations.
      *

@@ -82,7 +82,7 @@ class CustomerController extends Controller
                 "customer" => $customer,
                 "access_token" => $accessToken,
                 "last_redemption" => $last_redemption,
-                "rate" => $points_to_one_cedi
+                "rate" => intval($points_to_one_cedi)
                 ]);
 
         } else {
@@ -194,7 +194,7 @@ class CustomerController extends Controller
                 "customer" => $customer, 
                 "access_token" => $accessToken, 
                 "last_redemption" => $last_redemption,
-                "rate" => $points_to_one_cedi
+                "rate" => intval($points_to_one_cedi)
                 ]);
         }
     
