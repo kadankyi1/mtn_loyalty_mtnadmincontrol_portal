@@ -597,7 +597,7 @@ public function search_one_merchant(Request $request)
     $unpaid_claims = 0;
     $admin_fullname = "Unavailable";
 
-    if(!isset($this_merchant[0])){
+    if(isset($this_merchant[0])){
         $where_array = array(
             ['administrators.admin_id', '=', $this_merchant[0]->admin_id]
         ); 
