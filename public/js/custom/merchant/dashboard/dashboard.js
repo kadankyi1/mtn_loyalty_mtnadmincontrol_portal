@@ -85,6 +85,28 @@ function get_dashboard_info_success_response_function(response)
     }
 }
 
+
+
+function update_redemption_success_response_function(response)
+{
+    $("#pay_icon_" + response.redemption_id).remove();
+    $("#decline_icon_" + response.redemption_id).remove();
+    $("#loader_for_redemption_id_" + response.redemption_id).remove();
+    if(response.vendor_paid_fiat == 1){
+        var status = '<span class="badge badge-success">Redeemed</span>';
+    } else if(response.vendor_paid_fiat == 2){
+        var status = '<span class="badge badge-danger">Declined</span>';
+    }
+    $("#status_for_" + response.redemption_id).html(status);
+    show_notification("msg_holder", "success", "", response.message);
+}
+
+function update_redemption_error_response_function(errorThrown)
+{
+    $('#loader2').fadeOut();
+    show_notification("msg_holder", "danger", "Error", errorThrown);
+}
+
 function get_dashboard_info_error_response_function(errorThrown)
 {
     $('#loader').fadeOut();
