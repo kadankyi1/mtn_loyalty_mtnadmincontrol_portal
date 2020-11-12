@@ -106,6 +106,9 @@ function get_redemptions_success_response_function(response)
         $('#claims_table').fadeIn();
     } else {
         $('#search_form').fadeIn();
+        $('#loader').fadeOut();
+        $('#loader2').fadeOut();
+        $('#claims_table').fadeIn();
         show_notification("msg_holder", "danger", "", "Failed to load redemptions");
     }
 }
