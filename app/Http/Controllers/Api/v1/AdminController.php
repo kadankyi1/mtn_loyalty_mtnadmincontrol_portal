@@ -622,15 +622,16 @@ public function search_one_merchant(Request $request)
 
         if($unpaid_claims[0] != null){
             $unpaid_claims = (array) $unpaid_claims[0];
+            $this_merchant[0]->merchant_unpaid_claims = $unpaid_claims["count(*)"];
         } else {
             $unpaid_claims = 0;
+            $this_merchant[0]->merchant_unpaid_claims = $unpaid_claims;
         }
     
     }
 
     $this_merchant[0]->admin_fullname = $admin_fullname;
     
-    $this_merchant[0]->merchant_unpaid_claims = $unpaid_claims["count(*)"];
     return response([
         "status" => "success", 
         "message" => "Operation successful", 
