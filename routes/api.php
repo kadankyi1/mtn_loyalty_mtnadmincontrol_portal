@@ -85,3 +85,5 @@ Route::post('/v1/customer/register', 'Api\v1\CustomerController@register');
 Route::post('/v1/customer/redemptions/list', 'Api\v1\CustomerController@get_redemptions');
 
 Route::post('/v1/customer/airtime', 'Api\v1\CustomerController@load_airtime');
+
+Route::post('/v1/customer/redemptions/add', 'Api\v1\CustomerController@make_redemption');

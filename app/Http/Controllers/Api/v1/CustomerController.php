@@ -6,6 +6,8 @@ use App\Models\v1\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\v1\Merchant;
+use App\Models\v1\Redemption;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,6 +27,7 @@ class CustomerController extends Controller
     //public $customer_phone_number = "0540000020";
     public $customer_phone_number = "0540000023";
     public $customer_pin = "1234";
+    public $merchant_id = 1;
 
     public function register(Request $request)
     {
@@ -61,13 +64,25 @@ class CustomerController extends Controller
                 $date=date_create($redemptions[0]->created_at);
                 $last_redemption = date_format($date,"M j Y");
             }
+
+
+            $points_to_one_cedi = DB::table('settings')
+            ->where("settings_id", "=", "points_to_one_cedi")
+            ->first();
+
+            if($points_to_one_cedi != null){
+                $points_to_one_cedi = $points_to_one_cedi->settings_info_1;
+            } else {
+                return response(["status" => "fail", "message" => "Points conversion failed"]);
+            }
             
             return response([
                 "status" => "success", 
                 "message" => "customer added successsfully.", 
                 "customer" => $customer,
                 "access_token" => $accessToken,
-                "last_redemption" => $last_redemption
+                "last_redemption" => $last_redemption,
+                "rate" => $points_to_one_cedi
                 ]);
 
         } else {
@@ -163,12 +178,23 @@ class CustomerController extends Controller
                 $last_redemption = date_format($date,"M j Y");
             }
 
+            $points_to_one_cedi = DB::table('settings')
+            ->where("settings_id", "=", "points_to_one_cedi")
+            ->first();
+
+            if($points_to_one_cedi != null){
+                $points_to_one_cedi = $points_to_one_cedi->settings_info_1;
+            } else {
+                return response(["status" => "fail", "message" => "Points conversion failed"]);
+            }
+
             return response([
                 "status" => "success", 
                 "message" => "customer added successsfully.", 
                 "customer" => $customer, 
                 "access_token" => $accessToken, 
-                "last_redemption" => $last_redemption
+                "last_redemption" => $last_redemption,
+                "rate" => $points_to_one_cedi
                 ]);
         }
     
@@ -308,6 +334,96 @@ public function get_redemptions(Request $request)
         "redemptions" => $redemptions
         ]);
     }
+
+
+public function make_redemption(Request $request)
+{
+    
+    $request->validate([
+        "customer_name" => "max:200",
+        "customer_phone_number" => "max:55",
+        "points" => "bail|required|numeric",
+        "customer_pin" => "max:55",
+    ]);
+
+    $validatedData["customer_name"] = $this->customer_name;
+    $validatedData["customer_phone_number"] = $this->customer_phone_number;
+    $validatedData["customer_pin"] = $this->customer_pin;
+    $validatedData["merchant_id"] = $this->merchant_id;
+
+    $last_redemption ="Unavailable";
+    $customer = Customer::where('customer_phone_number', $validatedData["customer_phone_number"])->first();
+
+    if ($customer == null || $customer->customer_phone_number != $validatedData["customer_phone_number"]) {
+        return response(["status" => "fail", "message" => "Permission Denied. Incorrect Credentials"]);
+    }
+
+    $merchant = Merchant::where('merchant_id', $validatedData["merchant_id"])->first();
+
+    if ($merchant == null || $merchant->merchant_id != $validatedData["merchant_id"]) {
+        return response(["status" => "fail", "message" => "Merchant not found"]);
+    }
+
+    /**********  AIRTIME TO CEDIS ************ */
+    
+
+    $points_to_one_cedi = DB::table('settings')
+    ->where("settings_id", "=", "points_to_one_cedi")
+    ->first();
+
+    if($points_to_one_cedi != null){
+        $points_to_one_cedi = $points_to_one_cedi->settings_info_1;
+    } else {
+        return response(["status" => "fail", "message" => "Points conversion failed"]);
+    }
+
+    $redemption_amt = $request->points / $points_to_one_cedi;
+    
+    if($customer->points < $request->points){
+        return response(["status" => "fail", "message" => "Insufficient points"]);
+    }
+
+    $customer->points = $customer->points - $request->points;
+    $customer->save();
+
+    $redemption = new Redemption();
+    $redemption->merchant_id = $validatedData["merchant_id"]; 
+    $redemption->customer_id = $customer->customer_id; 
+    $redemption->customer_phone = $customer->customer_phone_number; 
+    $redemption->points_to_one_cedi_rate_used = $points_to_one_cedi; 
+    $redemption->redeemed_points = $request->points; 
+    $redemption->points_to_one_cedi_rate_used = $points_to_one_cedi; 
+    $redemption->redemption_cedi_equivalent_paid = $redemption_amt; 
+    $redemption->save();
+
+
+    $message = "Redemption request successful. You get Gh¢" . $redemption_amt . " for this redemption";
+
+    $where_array = array(
+        ['customer_id', '=',  $customer->customer_id],
+    ); 
+
+    $last_redemption = DB::table('redemptions')
+    ->select('redemptions.*')
+    ->where($where_array)
+    ->orderBy('redemption_id', 'desc') 
+    ->get();
+
+    
+    if(isset($last_redemption[0]) && $last_redemption[0]->created_at != ""){
+        $date=date_create($last_redemption[0]->created_at);
+        $last_redemption = date_format($date,"M j Y");
+    }
+
+    return response([
+        "status" => "success", 
+        "message" => $message, 
+        "customer" => $customer, 
+        "last_redemption" => $last_redemption
+        ]);
+
+    
+}
 
     
 }
