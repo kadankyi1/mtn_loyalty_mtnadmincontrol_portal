@@ -6,7 +6,7 @@ $active_page = "Dashboard";
 
 <!-- INCLUDING CUSTOM SCRIPTS AND STYLES -->
 @section('top_scripts_and_styles')
-    <link rel="stylesheet" href="/css/mtnadministrator/custom.css">
+    <link rel="stylesheet" href="/css/custom.css">
     <script src="/js/custom/mtnadministrator/config.js"></script>
     <script src="/js/custom/mtnadministrator/auth.js"></script>
 @endsection()
