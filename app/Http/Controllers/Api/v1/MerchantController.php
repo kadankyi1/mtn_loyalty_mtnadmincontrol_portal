@@ -170,6 +170,7 @@ public function get_redemptions(Request $request)
     $redemptions = DB::table('redemptions')
     ->select('redemptions.*')
     ->where($where_array)
+    ->orderBy('redemption_id', 'desc') 
     ->get();
 
 

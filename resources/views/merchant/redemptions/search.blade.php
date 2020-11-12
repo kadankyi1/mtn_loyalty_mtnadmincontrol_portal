@@ -46,7 +46,7 @@ $active_page = "Redemptions";
             <div class="col-md-12 col-xl-12 height-card box-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title mb-30">Recent Claims</h6>
+                        <h6 class="card-title mb-30">Recent Redemptions</h6>
                         <div class="d-flex justify-content-center">
                             <div id="loader2" class="customloader" ></div>
                         </div> 
