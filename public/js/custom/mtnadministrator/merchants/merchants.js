@@ -85,6 +85,37 @@ function search_merchant_success_response_function(response)
         $("#admin_name").html(element.admin_fullname);
         
         $('#profile_merchant').fadeIn();
+        $('#claims_table').fadeIn();
+
+
+        if(response.redemptions.length > 0){
+            $('#table_body_list').html("");
+            for (let index = 0; index < response.redemptions.length; index++) {
+                const element = response.redemptions[index];
+                if(element.vendor_paid_fiat == 1){
+                    var status = '<span class="badge badge-success">Redeemed</span>';
+                } else if(element.vendor_paid_fiat == 0){
+                    var status = '<span class="badge badge-info">Pending</span>';
+                } else {
+                    var status = '<span class="badge badge-danger">Declined</span>';
+                }
+                $('#table_body_list').append(
+                    '<tr style="cursor: ;" class="claim">'
+                    + '<td>' + element.redemption_id + '</td>'
+                    + '<td>' + element.customer_phone + '</td>'
+                    + '<td>' + element.points_to_one_cedi_rate_used + '</td>'
+                    + '<td>Gh¢' + element.redemption_cedi_equivalent_paid + '</td>'
+                    + '<td>' + element.redeemed_points + '</td>'
+                    + '<td id="status_for_' + element.redemption_id  + '">' + status +' </td>'
+                    + '<td>' + element.created_at + '</td>'
+                    + '</tr>'
+                );
+            }
+            
+        } else {
+            show_notification("msg_holder", "danger", "", "No redemptions found for this merchant");
+        }
+
         fade_out_loader_and_fade_in_form("loader", "search_form"); 
     } else {
         fade_out_loader_and_fade_in_form("loader", "search_form"); 

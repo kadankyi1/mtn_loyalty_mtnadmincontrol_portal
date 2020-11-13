@@ -143,6 +143,38 @@ $active_page = "Merchants";
         </div>
     </div>
 
+    
+    
+    <div class="container-fluid"  id="claims_table" style="display: none">
+        <div class="row">
+            <!-- Projects of the Month -->
+            <div class="col-md-12 col-xl-12 height-card box-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title mb-30">Redemptions</h6>
+                        <div class="table-responsive" >
+                            <table class="table table-nowrap table-hover mb-0" id="dataTableExample">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Customer Phone</th>
+                                        <th>Rate</th>
+                                        <th>Redeemed-Amount</th>
+                                        <th>Redeemed-Points</th>
+                                        <th>Status</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table_body_list">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
             <!-- Footer Area -->
             <div class="container-fluid">
