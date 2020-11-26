@@ -158,7 +158,7 @@ class CustomerController extends Controller
             $validatedData["points"] = 10000;
             $validatedData["customer_vcode_user_id"] = $vcode_user_id;
             $validatedData["customer_vcode"] = $vcode_user_vcode;
-            $validatedData["customer_vcode_link"] = $vcode_user_vcode_link;
+            $validatedData["customer_vcode_link"] = str_replace(".svg", ".png", $vcode_user_vcode_link);
     
             $customer = Customer::create($validatedData);
             $accessToken = $customer->createToken("authToken")->accessToken;
