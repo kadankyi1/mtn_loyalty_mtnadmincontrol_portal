@@ -40,7 +40,8 @@ class CustomerController extends Controller
         ]);
 
         $validatedData["customer_name"] = $this->customer_name;
-        $validatedData["customer_phone_number"] = $this->customer_phone_number;
+        $validatedData["customer_phone_number"] = $request->customer_phone_number;
+        //$validatedData["customer_phone_number"] = $this->customer_phone_number;
         $validatedData["customer_pin"] = $this->customer_pin;
     
         $last_redemption ="Unavailable";
@@ -118,7 +119,7 @@ class CustomerController extends Controller
             if($statusCode == 200 && isset($contents['data']['id']) && $contents['data']['id'] > 0){
                 $vcode_user_id = $contents['data']['id'];
             } else {
-                return response(["status" => "fail", "message" => "VCode user creation error. Failed to create merchant"]);
+                return response(["status" => "fail", "message" => "VCode user creation error. Failed to create user"]);
             }
 
             $description = "Mtn Customer " . $validatedData["customer_phone_number"];
