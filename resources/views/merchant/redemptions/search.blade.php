@@ -61,7 +61,6 @@ $active_page = "Redemptions";
                                         <th>Redeemed-Points</th>
                                         <th>Status</th>
                                         <th>Time</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="table_body_list">
