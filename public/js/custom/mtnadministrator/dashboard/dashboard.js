@@ -33,47 +33,45 @@ $(document).on('click', '.decline-icon', function () {
 */
 function get_dashboard_info_success_response_function(response)
 {
-    if(response.points_to_one_cedi.trim() != ""){
-            $('#loader2').fadeOut();
-            $('#loader3').fadeOut();
-            $('#loader4').fadeOut();
-            $("#pending_claims").html(response.unpaid);
-            $("#vendors").html(response.merchants);
-            $("#points_rate").html(response.points_to_one_cedi);
-            $('#pending_claims').fadeIn();
+    console.log(response);
+    if(response.pts_to_1_cedis_nc.trim() != ""){
+            $('#hvc_rate_loader').fadeOut();
+            $('#nc_rate_loader').fadeOut();
+            $('#vendors_loader').fadeOut();
+            $("#hvc_rate").html(response.pts_to_1_cedis_hvc);
+            $("#nc_rate").html(response.pts_to_1_cedis_nc);
+            $("#vendors").html(response.merchants_count);
+            $('#hvc_rate_span').fadeIn();
+            $('#nc_rate_span').fadeIn();
             $('#vendors').fadeIn();
-            $('#points_rate_holder').fadeIn();
 
-            if(response.claims.length > 0){
-                for (let index = 0; index < response.claims.length; index++) {
-                    const element = response.claims[index];
+            if(response.merchants.length > 0){
+                for (let index = 0; index < response.merchants.length; index++) {
+                    const element = response.merchants[index];
                     url = '';
-                    if(element.paid_status == 1){
-                        var status = '<span class="badge badge-success">Paid</span>';
-                        var action = '';
-                    } else if(element.paid_status == 0){
-                        var status = '<span class="badge badge-info">Pending</span>';
-                        var action = '<img id="pay_icon" class="pay-icon" style="height:30px; width:30px; cursor: pointer;" src="/img/tick.png" />   <img id="decline_icon"  class="decline-icon" style="height:30px; width:30px; cursor: pointer;" src="/img/wrong.png" />'
+                    if(element.merchant_flagged == 1){
+                        var status = '<span class="badge badge-danger">Flagged</span>';
+                    } else if(element.merchant_flagged == 0){
+                        var status = '<span class="badge badge-success">Active</span>';
                     } else {
-                        var status = '<span class="badge badge-danger">Declined</span>';
-                        var action = '';
+                        var status = '<span class="badge badge-info">Unknown</span>';
                     }
                     $('#table_body_list').append(
                         '<tr style="cursor: ;" class="claim" data-url="' + url + '">'
-                        + '<td>' + element.claim_id + '</td>'
-                        + '<td>' + element.merchant_fullname + '</td>'
+                        + '<td>' + element.merchant_id + '</td>'
+                        + '<td>' + element.merchant_name + '</td>'
                         + '<td>' + element.merchant_phone_number + '</td>'
-                        + '<td>Gh¢' + element.claim_amount + '</td>'
+                        + '<td>' + element.pts_to_1_cedis_hvc + '</td>'
+                        + '<td>' + element.pts_to_1_cedis_nc + '</td>'
                         + '<td>' + status +' </td>'
                         + '<td>' + element.admin_fullname + '</td>'
                         + '<td>' + element.created_at + '</td>'
-                        + '<td>' + action + '</td>'
                         + '</tr>'
                     );
                 }
                 
         } else {
-            show_notification("msg_holder", "danger", "", "Stats failed to load");
+            show_notification("msg_holder", "danger", "", "No vendors found");
         }
     }
 }

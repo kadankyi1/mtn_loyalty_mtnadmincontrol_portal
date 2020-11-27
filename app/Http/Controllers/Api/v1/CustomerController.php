@@ -25,7 +25,7 @@ class CustomerController extends Controller
 
     public $customer_name = "Dankyi Anno Kwaku";
     //public $customer_phone_number = "0540000020";
-    public $customer_phone_number = "0540000023";
+    public $customer_phone_number = "0540000027";
     public $customer_pin = "1234";
     public $merchant_id = 1;
 
@@ -40,8 +40,8 @@ class CustomerController extends Controller
         ]);
 
         $validatedData["customer_name"] = $this->customer_name;
-        $validatedData["customer_phone_number"] = $request->customer_phone_number;
-        //$validatedData["customer_phone_number"] = $this->customer_phone_number;
+        //$validatedData["customer_phone_number"] = $request->customer_phone_number;
+        $validatedData["customer_phone_number"] = $this->customer_phone_number;
         $validatedData["customer_pin"] = $this->customer_pin;
     
         $last_redemption ="Unavailable";

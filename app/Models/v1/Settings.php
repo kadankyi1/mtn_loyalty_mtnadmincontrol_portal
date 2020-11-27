@@ -2,8 +2,10 @@
 
 namespace App\Models\v1;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Settings extends Model
 { 
@@ -14,7 +16,7 @@ class Settings extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'redemption_id';
+    protected $primaryKey = 'settings_id';
 
     /**
      * The attributes that are mass assignable.
@@ -25,6 +27,7 @@ class Settings extends Model
         'settings_id', 
         'settings_info_1', 
         'settings_info_2', 
+        'admin_id', 
         'created_at',
         'updated_at',
     ];

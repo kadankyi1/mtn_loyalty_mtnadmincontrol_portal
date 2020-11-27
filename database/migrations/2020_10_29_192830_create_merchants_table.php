@@ -26,6 +26,8 @@ class CreateMerchantsTable extends Migration
             $table->string('merchant_vcode', 255);
             $table->string('merchant_vcode_link', 255);
             $table->string('merchant_pin', 255);
+            $table->unsignedBigInteger('pts_to_1_cedis_hvc');
+            $table->unsignedBigInteger('pts_to_1_cedis_nc');
             $table->string('password', 255);
             $table->boolean('merchant_flagged');
             $table->timestamps();

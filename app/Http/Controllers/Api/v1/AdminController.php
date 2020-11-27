@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\v1\Administrator;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\v1\Settings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -396,6 +397,8 @@ public function add_merchant(Request $request)
         "merchant_phone_number" => "bail|required|regex:/(0)[0-9]{9}/|min:10|max:10",
         "merchant_email" => "bail|required|email|max:100",
         "merchant_location" => "bail|required",
+        "pts_to_1_cedis_hvc" => "bail|required|integer",
+        "pts_to_1_cedis_nc" => "bail|required|integer",
         "admin_pin" => "bail|required|min:4|max:8",
     ]);
 
@@ -484,6 +487,8 @@ public function add_merchant(Request $request)
         $merchant->merchant_vcode_link = $vcode_user_vcode_link;
         $merchant->merchant_pin = $validatedData["merchant_pin"];
         $merchant->password = $validatedData["password"];
+        $merchant->pts_to_1_cedis_hvc = $validatedData["pts_to_1_cedis_hvc"];
+        $merchant->pts_to_1_cedis_nc = $validatedData["pts_to_1_cedis_nc"];
         $merchant->merchant_flagged = false;
         $merchant->admin_id = $validatedData["admin_id"];
         $merchant->save();
@@ -762,17 +767,26 @@ public function get_dashboard(Request $request)
     $al_merchants = (array) $al_merchants["count(*)"];
 
 
-    $points_to_one_cedi = DB::table('settings')
-    ->where("settings_id", "=", "points_to_one_cedi")
+    $pts_to_1_cedis_hvc = DB::table('settings')
+    ->where("settings_id", "=", "pts_to_1_cedis_hvc")
     ->first();
 
-    if($points_to_one_cedi != null){
-        $points_to_one_cedi = $points_to_one_cedi->settings_info_1;
+    if($pts_to_1_cedis_hvc != null){
+        $pts_to_1_cedis_hvc = $pts_to_1_cedis_hvc->settings_info_1;
     } else {
-        $points_to_one_cedi = "N/A";
+        $pts_to_1_cedis_hvc = "[NA]";
     }
     
+    $pts_to_1_cedis_nc = DB::table('settings')
+    ->where("settings_id", "=", "pts_to_1_cedis_nc")
+    ->first();
 
+    if($pts_to_1_cedis_nc != null){
+        $pts_to_1_cedis_nc = $pts_to_1_cedis_nc->settings_info_1;
+    } else {
+        $pts_to_1_cedis_nc = "[NA]";
+    }
+    
 
     $claims = DB::table('claims')
     ->select('claims.*')
@@ -790,12 +804,12 @@ public function get_dashboard(Request $request)
                 $claims[$i]->merchant_fullname = $this_merchant[0]->merchant_name;
                 $claims[$i]->merchant_phone_number = $this_merchant[0]->merchant_phone_number;
             } else {
-                $claims[$i]->merchant_fullname = "N/A";
-                $claims[$i]->merchant_phone_number = "N/A";
+                $claims[$i]->merchant_fullname = "[NA]";
+                $claims[$i]->merchant_phone_number = "[NA]";
             }
         } else {
-            $claims[$i]->merchant_fullname = "N/A";
-            $claims[$i]->merchant_phone_number = "N/A";
+            $claims[$i]->merchant_fullname = "[NA]";
+            $claims[$i]->merchant_phone_number = "[NA]";
         }
 
         if($claims[$i]->payer_admin_id > 0 && $claims[$i]->payer_admin_id != null){
@@ -806,24 +820,105 @@ public function get_dashboard(Request $request)
             if(isset($this_admin[0])){
                 $claims[$i]->admin_fullname = $this_admin[0]->admin_firstname . " " . $this_admin[0]->admin_surname;
             } else {
-                $claims[$i]->admin_fullname = "N/A";
+                $claims[$i]->admin_fullname = "[NA]";
             }
         } else {
-            $claims[$i]->admin_fullname = "N/A";
+            $claims[$i]->admin_fullname = "[NA]";
+        }
+    }
+
+
+    $merchants = DB::table('merchants')
+    ->select('merchants.*')
+    ->get();
+
+    for ($i=0; $i < count($merchants); $i++) { 
+
+        if($merchants[$i]->merchant_id > 0){
+            $this_admin = DB::table('administrators')
+            ->where("admin_id", "=", $merchants[$i]->admin_id)
+            ->get();
+        
+            if(isset($this_admin[0])){
+                $merchants[$i]->admin_fullname = $this_admin[0]->admin_surname . " " .  $this_admin[0]->admin_firstname;
+            } else {
+                $merchants[$i]->admin_fullname = "[[NA]]";
+            }
+        } else {
+            $merchants[$i]->admin_fullname = "[[NA]]";
         }
     }
 
     return response([
         "status" => "success", 
         "message" => "Operation successful", 
-        "merchants" => $al_merchants[0], 
+        "merchants_count" => $al_merchants[0], 
         "unpaid" => $unpaid_claims[0], 
         "sum_unpaid" => $cedis_sum_unpaid_claims, 
-        "points_to_one_cedi" => $points_to_one_cedi, 
-        "claims" => $claims
+        "pts_to_1_cedis_hvc" => $pts_to_1_cedis_hvc, 
+        "pts_to_1_cedis_nc" => $pts_to_1_cedis_nc, 
+        "claims" => $claims, 
+        "merchants" => $merchants
         ]);
 }
 
+
+
+public function add_rate_for_getting_points(Request $request)
+{
+    $log_controller = new LogController();
+
+    if (!Auth::guard('api')->check()) {
+        return response(["status" => "fail", "message" => "Permission Denied. Please log out and login again"]);
+    }
+
+
+    if (!Hash::check($request->admin_pin, auth()->user()->admin_pin)) {
+        $log_controller->save_log("administrator", auth()->user()->admin_id, "Settings|Admin", "Incorrect pin");
+        return response(["status" => "fail", "message" => "Incorrect pin."]);
+    }
+
+    $validatedData = $request->validate([
+        "pts_to_1_cedis_hvc" => "bail|required|max:55",
+        "pts_to_1_cedis_nc" => "bail|required|max:55",
+        "admin_pin" => "bail|required|min:4|max:8",
+    ]);
+
+
+
+    $high_value_customer_setting = Settings::where('settings_id', 'pts_to_1_cedis_hvc')->first();
+
+    if ($high_value_customer_setting != null && $high_value_customer_setting->settings_id == 'pts_to_1_cedis_hvc') {
+        $high_value_customer_setting->settings_info_1 = $request->pts_to_1_cedis_hvc;
+        $high_value_customer_setting->admin_id = auth()->user()->admin_id;
+        $high_value_customer_setting->save();
+    } else {
+
+        $high_value_customer_setting  = new Settings;
+        $high_value_customer_setting->settings_id = 'pts_to_1_cedis_hvc';
+        $high_value_customer_setting->settings_info_1 = $request->pts_to_1_cedis_hvc;
+        $high_value_customer_setting->settings_info_2 = '';
+        $high_value_customer_setting->admin_id = auth()->user()->admin_id;
+        $high_value_customer_setting->save();
+    }
+    
+    $normal_customer_setting = Settings::where('settings_id', 'pts_to_1_cedis_nc')->first();
+
+    if ($normal_customer_setting != null && $normal_customer_setting->settings_id == 'pts_to_1_cedis_nc') {
+        $normal_customer_setting->settings_info_1 = $request->pts_to_1_cedis_nc;
+        $normal_customer_setting->admin_id = auth()->user()->admin_id;
+        $normal_customer_setting->save();
+    } else {
+        $normal_customer_setting  = new Settings;
+        $normal_customer_setting->settings_id = 'pts_to_1_cedis_nc';
+        $normal_customer_setting->settings_info_1 = $request->pts_to_1_cedis_nc;
+        $normal_customer_setting->settings_info_2 = '';
+        $normal_customer_setting->admin_id = auth()->user()->admin_id;
+        $normal_customer_setting->save();
+    }
+    
+    return response(["status" => "success", "message" => "Operation successsful."]);
+}
 
 
 

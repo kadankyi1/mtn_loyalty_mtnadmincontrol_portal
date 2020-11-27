@@ -92,6 +92,17 @@ Route::get('/admin/password/change', function () {
 });
 
 
+/*
+|--------------------------------------------------------------------------
+| SECURITY - CHANGE PASSWORD
+|--------------------------------------------------------------------------
+|
+*/
+Route::get('/admin/settings/makepoints', function () {
+    return view('mtnadministrator/settings/makepoints');
+});
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -146,3 +157,4 @@ Route::get('/merchant/claims', function () {
 Route::get('/merchant/claims/add', function () {
     return view('merchant/claims/add');
 });
+

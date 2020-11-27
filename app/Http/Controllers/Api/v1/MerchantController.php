@@ -35,7 +35,7 @@ class MerchantController extends Controller
         ]);
 
         // get user object
-        $merchant = Merchant::where('merchant_phone_number', request()->merchant_phone_number)->first();
+        $merchant = Merchant::where('merchant_phone_number', $request->merchant_phone_number)->first();
         // do the passwords match?
 
         if ($merchant == null || !Hash::check($request->password, $merchant->password)) {
@@ -79,7 +79,6 @@ public function get_dashboard(Request $request)
     }
 
     $where_array = array(
-        ['vendor_paid_fiat', '=',  0],
         ['merchant_id', '=',  auth()->user()->merchant_id],
     ); 
 
@@ -106,7 +105,7 @@ public function get_dashboard(Request $request)
     if($points_to_one_cedi != null){
         $points_to_one_cedi = $points_to_one_cedi->settings_info_1;
     } else {
-        $points_to_one_cedi = "N/A";
+        $points_to_one_cedi = "[NA]";
     }
     
 
@@ -117,6 +116,16 @@ public function get_dashboard(Request $request)
     ->get();
 
 
+
+    $where_array = array(
+        ['merchant_id', '=',  auth()->user()->merchant_id],
+    ); 
+
+    $merchants = DB::table('merchants')
+    ->where($where_array)
+    ->first();
+
+    
     return response([
         "status" => "success", 
         "message" => "Operation successful", 
@@ -124,7 +133,8 @@ public function get_dashboard(Request $request)
         "points_to_one_cedi" => $points_to_one_cedi, 
         "merchant_balance" => auth()->user()->merchant_balance, 
         "merchant_vcode" => auth()->user()->merchant_vcode_link, 
-        "redemptions" => $redemptions
+        "redemptions" => $redemptions, 
+        "merchants" => $merchants
         ]);
     }
 
@@ -314,12 +324,12 @@ public function get_claims(Request $request)
                 $claims[$i]->merchant_fullname = $this_merchant[0]->merchant_name;
                 $claims[$i]->merchant_phone_number = $this_merchant[0]->merchant_phone_number;
             } else {
-                $claims[$i]->merchant_fullname = "N/A";
-                $claims[$i]->merchant_phone_number = "N/A";
+                $claims[$i]->merchant_fullname = "[NA]";
+                $claims[$i]->merchant_phone_number = "[NA]";
             }
         } else {
-            $claims[$i]->merchant_fullname = "N/A";
-            $claims[$i]->merchant_phone_number = "N/A";
+            $claims[$i]->merchant_fullname = "[NA]";
+            $claims[$i]->merchant_phone_number = "[NA]";
         }
 
         if($claims[$i]->payer_admin_id > 0 && $claims[$i]->payer_admin_id != null){
@@ -330,10 +340,10 @@ public function get_claims(Request $request)
             if(isset($this_admin[0])){
                 $claims[$i]->admin_fullname = $this_admin[0]->admin_firstname . " " . $this_admin[0]->admin_surname;
             } else {
-                $claims[$i]->admin_fullname = "N/A";
+                $claims[$i]->admin_fullname = "[NA]";
             }
         } else {
-            $claims[$i]->admin_fullname = "N/A";
+            $claims[$i]->admin_fullname = "[NA]";
         }
     }
 

@@ -48,6 +48,8 @@ class Merchant extends Authenticatable
         'admin_fullname',
         'admin_id',
         'merchant_balance',
+        'pts_to_1_cedis_hvc',
+        'pts_to_1_cedis_nc',
         'creator_id',
         'created_at',
         'updated_at',

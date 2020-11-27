@@ -72,6 +72,12 @@
                                     <li><a href="<?php echo url('/'); ?>/admin/merchants/search">Find</a></li>
                                 </ul>
                             </li>
+                            <li class="treeview <?php if(isset($active_page) && $active_page == 'Settings'){ echo 'active'; } ?>">
+                                <a href="javascript:void(0)"><i class="fa fa-gears"></i><span>Settings</span> <i class="fa fa-angle-right"  style="color: black;"></i></a>
+                                <ul class="treeview-menu">
+                                    <li><a href="<?php echo url('/'); ?>/admin/settings/makepoints">Points Generation</a></li>
+                                </ul>
+                            </li>
                             <li class="treeview <?php if(isset($active_page) && $active_page == 'Administrators'){ echo 'active'; } ?>">
                                 <a href="javascript:void(0)"><i class="fa fa-users"></i> <span>Administrators</span> <i class="fa fa-angle-right" style="color: black;"></i></a>
                                 <ul class="treeview-menu">

@@ -33,6 +33,7 @@ class Redemption extends Model
         'redeemed_points',
         'redemption_cedi_equivalent_paid',
         'vendor_paid_fiat',
+        'redemption_code', 
         'created_at',
         'updated_at',
     ];

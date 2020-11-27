@@ -66,7 +66,7 @@
                             <li <?php if(isset($active_page) && $active_page == 'Redemptions'){ echo 'class="active"'; } ?>><a href="<?php echo url('/'); ?>/merchant/redemptions/search"><i class="fa fa-check-square-o" aria-hidden="true"  style="color: black;"></i><span>Redemptions</span></a></li>
                             
                             <li class="treeview <?php if(isset($active_page) && $active_page == 'Claims'){ echo 'active'; } ?>">
-                                <a href="javascript:void(0)"><i class="fa fa-cloud-download" aria-hidden="true"  style="color: black;"></i> <span>Claims</span></a>
+                                <!--<a href="javascript:void(0)"><i class="fa fa-cloud-download" aria-hidden="true"  style="color: black;"></i> <span>Claims</span></a>-->
                                 <ul class="treeview-menu">
                                     <li><a href="<?php echo url('/'); ?>/merchant/claims/add">Add</a></li>
                                     <li><a href="<?php echo url('/'); ?>/merchant/claims">View</a></li>

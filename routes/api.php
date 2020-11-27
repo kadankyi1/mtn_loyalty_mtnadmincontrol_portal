@@ -39,6 +39,8 @@ Route::middleware(['auth:api', 'scope:admin_view_redemptions'])->get('/v1/admin/
 
 Route::middleware(['auth:api'])->get('/v1/admin/dashboard/get', 'Api\v1\AdminController@get_dashboard');
 
+Route::middleware(['auth:api'])->post('/v1/admin/settings/update', 'Api\v1\AdminController@add_rate_for_getting_points');
+
 
 
 

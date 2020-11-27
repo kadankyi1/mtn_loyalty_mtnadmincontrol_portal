@@ -28,7 +28,7 @@ $active_page = "Dashboard";
                                 </h6>
 
                                 <div class="d-flex justify-content-center">
-                                    <div id="loader7" class="customloader" ></div>
+                                    <div id="vcode_loader" class="customloader" ></div>
                                 </div> 
                                 <!-- Heading -->
                                 <span class="font-24 text-dark mb-0" id="vcode_img" style="display: none;">
@@ -49,7 +49,7 @@ $active_page = "Dashboard";
             
             <div class="col-8 col-sm-8 col-xl">
             
-                <div class="col-12 col-sm-6 col-xl">
+                <div class="col-12 col-sm-6 col-xl" style="display: none">
                     <!-- Card -->
                     <div class="card box-margin">
                         <div class="card-body">
@@ -88,49 +88,17 @@ $active_page = "Dashboard";
                             <div class="row align-items-center">
                                 <div class="col">
                                     <!-- Title -->
-                                    <h6 class="text-uppercase font-14">
-                                        Pending Redemptions
-                                    </h6>
-    
-                                    <div class="d-flex justify-content-center">
-                                        <div id="loader2" class="customloader" ></div>
-                                    </div> 
-                                    <!-- Heading -->
-                                    <span class="font-24 text-dark mb-0" id="pending_redemptions" style="display: none;">
-                                        
-                                    </span>
-                                </div>
-    
-                                <div class="col-auto">
-                                    <!-- Icon -->
-                                    <div class="icon">
-                                        <img src="img/bg-img/icon-10.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    
-    
-                <div class="col-12 col-sm-6 col-xl">
-                    <!-- Card -->
-                    <div class="card box-margin">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <!-- Title -->
                                     <h6 class="font-14 text-uppercase">
-                                        Cedi To Points Rate
+                                        Pts Per Cedi<br>High-Value Customers
                                     </h6>
                                     <div class="d-flex justify-content-center">
-                                        <div id="loader4" class="customloader" ></div>
+                                        <div id="hvc_rate_loader" class="customloader" ></div>
                                     </div> 
                                     <div class="row align-items-center no-gutters">
                                         <div class="col-auto">
                                             <!-- Heading -->
-                                            <span class="font-24 text-dark mr-0" id="points_rate_holder" style="display: none;">
-                                                GH¢1 = <span id="points_rate">100</span> Pts
+                                            <span class="font-24 text-dark mr-0" id="hvc_rate_holder" style="display: none;">
+                                                <span id="hvc_rate">100</span> Pts = GH¢1
                                             </span>
                                         </div>
                                     </div>
@@ -146,6 +114,43 @@ $active_page = "Dashboard";
                         </div>
                     </div>
                 </div>
+    
+                <div class="col-12 col-sm-6 col-xl">
+                    <!-- Card -->
+                    <div class="card box-margin">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <!-- Title -->
+                                    <h6 class="text-uppercase font-14">
+                                        Pts Per Cedi<br>Normal Customers
+                                    </h6>
+    
+                                    <div class="d-flex justify-content-center">
+                                        <div id="nc_rate_loader" class="customloader" ></div>
+                                    </div> 
+                                    <!-- Heading -->
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col-auto">
+                                            <!-- Heading -->
+                                            <span class="font-24 text-dark mr-0" id="nc_rate_holder" style="display: none;">
+                                               <span id="hvc_rate">100</span> Pts =  GH¢1
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="col-auto">
+                                    <!-- Icon -->
+                                    <div class="icon">
+                                        <img src="img/bg-img/icon-11.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
             </div>
         </div>
 
@@ -156,7 +161,7 @@ $active_page = "Dashboard";
             <div class="col-md-12 col-xl-12 height-card box-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title mb-30">Pending Redemptions</h6>
+                        <h6 class="card-title mb-30">Redemptions</h6>
                         <div class="table-responsive">
                             <table class="table table-nowrap table-hover mb-0" id="dataTableExample">
                                 <thead>
@@ -168,7 +173,6 @@ $active_page = "Dashboard";
                                         <th>Redeemed-Points</th>
                                         <th>Status</th>
                                         <th>Time</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="table_body_list">

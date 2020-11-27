@@ -77,6 +77,8 @@ function search_merchant_success_response_function(response)
         $("#merchant_location").html(element.merchant_location);
         $("#merchant_phone_number2").html(element.merchant_phone_number);
         $("#merchant_email").html(element.merchant_email);
+        $("#pts_to_1_cedis_hvc").html(element.pts_to_1_cedis_hvc);
+        $("#pts_to_1_cedis_nc").html(element.pts_to_1_cedis_nc);
         $("#created_at").html(element.created_at);
         $("#merchant_vcode_img").attr('src', element.merchant_vcode_link);
 

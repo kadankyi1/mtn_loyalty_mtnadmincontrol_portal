@@ -37,19 +37,20 @@ $(document).ready(function ()
 */
 function get_dashboard_info_success_response_function(response)
 {
-    if(response.points_to_one_cedi.trim() != ""){
-            $('#loader2').fadeOut();
-            $('#loader3').fadeOut();
-            $('#loader4').fadeOut();
-            $('#loader7').fadeOut();
-            $("#balance_now").html("Gh¢" + response.merchant_balance);
-            $("#pending_redemptions").html(response.unpaid);
-            $("#points_rate").html(response.points_to_one_cedi);
+    if(response.merchant_vcode.trim() != ""){
+            $("#hvc_rate").html(response.merchants.pts_to_1_cedis_hvc);
+            $('#hvc_rate_loader').fadeOut();
+            $('#hvc_rate_holder').fadeIn();
+            $("#nc_rate").html(response.merchants.pts_to_1_cedis_nc);
+            $('#nc_rate_loader').fadeOut();
+            $('#nc_rate_holder').fadeIn();
             $('#real_vcode_img').attr('src', response.merchant_vcode);
-            $('#pending_redemptions').fadeIn();
-            $('#points_rate_holder').fadeIn();
-            $('#balance_now').fadeIn();
             $('#vcode_img').fadeIn();
+            $('#vcode_loader').fadeOut();
+            //$("#balance_now").html("Gh¢" + response.merchant_balance);
+            //$("#points_rate").html(response.points_to_one_cedi);
+            //$('#pending_redemptions').fadeIn();
+            //$('#balance_now').fadeIn();
 
             if(response.redemptions.length > 0){
                 for (let index = 0; index < response.redemptions.length; index++) {
@@ -80,7 +81,7 @@ function get_dashboard_info_success_response_function(response)
                 }
                 
         } else {
-            show_notification("msg_holder", "danger", "", "Stats failed to load");
+            show_notification("msg_holder", "danger", "", "No Redemptions found");
         }
     }
 }

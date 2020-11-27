@@ -75,59 +75,75 @@ $active_page = "Merchants";
                                 <div class="tab-pane fade active show" id="basic" role="tabpanel" aria-labelledby="basic-tab">
                                     <div class="card-body">
                                         <div class="row profile-row">
-                                            <div class="col-xs-5 col-sm-3">
+                                            <div class="col-xs-5 col-sm-4">
                                                 <span class="profile-cat">Name</span>
                                             </div>
-                                            <div class="col-xl-7 col-sm-9">
+                                            <div class="col-xl-7 col-sm-8">
                                                 <span class="profile-info" id="merchant_name"></span>
                                             </div>
                                         </div>
                                         <div class="row profile-row">
-                                            <div class="col-xs-5 col-sm-3">
+                                            <div class="col-xs-5 col-sm-4">
                                                 <span class="profile-cat">Phone</span>
                                             </div>
-                                            <div class="col-xl-7 col-sm-9">
+                                            <div class="col-xl-7 col-sm-8">
                                                 <span class="profile-info" id="merchant_phone_number2"></span>
                                             </div>
                                         </div>
                                         <div class="row profile-row">
-                                            <div class="col-xs-5 col-sm-3">
+                                            <div class="col-xs-5 col-sm-4">
                                                 <span class="profile-cat">Email</span>
                                             </div>
-                                            <div class="col-xl-7 col-sm-9">
+                                            <div class="col-xl-7 col-sm-8">
                                                 <span class="profile-info" id="merchant_email"></span>
                                             </div>
                                         </div>
                                         <div class="row profile-row">
-                                            <div class="col-xs-5 col-sm-3">
+                                            <div class="col-xs-5 col-sm-4">
                                                 <span class="profile-cat">Pending Claims</span>
                                             </div>
-                                            <div class="col-xl-7 col-sm-9">
+                                            <div class="col-xl-7 col-sm-8">
                                                 <span class="profile-info"  id="merchant_pending_claims"></span>
                                             </div>
                                         </div>
                                         <div class="row profile-row">
-                                            <div class="col-xs-5 col-sm-3">
+                                            <div class="col-xs-5 col-sm-4">
                                                 <span class="profile-cat">Balance</span>
                                             </div>
-                                            <div class="col-xl-7 col-sm-9">
+                                            <div class="col-xl-7 col-sm-8">
                                                 <span class="profile-info">Ghc <span id="merchant_balance"></span> </span>
+                                            </div>
+                                        </div>
+                                        <div class="row profile-row">
+                                            <div class="col-xs-5 col-sm-4">
+                                                <span class="profile-cat">Points-To-One-Cedi<br>(High Value Customers)</span>
+                                            </div>
+                                            <div class="col-xl-7 col-sm-8">
+                                                <span class="profile-info"><span id="pts_to_1_cedis_hvc"></span> Points</span>
+                                            </div>
+                                        </div>
+                                        <div class="row profile-row">
+                                            <div class="col-xs-5 col-sm-4">
+                                                <span class="profile-cat">Points-To-One-Cedi<br>(Normal Customers)</span>
+                                            </div>
+                                            <div class="col-xl-7 col-sm-8">
+                                                <span class="profile-info"><span id="pts_to_1_cedis_nc"></span> Points</span>
                                             </div>
                                         </div>
 
                                         <div class="row profile-row">
-                                            <div class="col-xs-5 col-sm-3">
+                                            <div class="col-xs-5 col-sm-4">
                                                 <span class="profile-cat">Created On</span>
                                             </div>
-                                            <div class="col-xl-7 col-sm-9">
+                                            <div class="col-xl-7 col-sm-8">
                                                 <span class="profile-info" id="created_at"></span>
                                             </div>
                                         </div>
                                         <div class="row profile-row">
-                                            <div class="col-xs-5 col-sm-3">
+                                            <div class="col-xs-5 col-sm-4">
                                                 <span class="profile-cat">Created By</span>
                                             </div>
-                                            <div class="col-xl-7 col-sm-9">
+                                            <div class="col-xl-7 col-sm-8">
                                                 <span class="profile-info" id="admin_name"></span>
                                             </div>
                                         </div>
