@@ -35,7 +35,6 @@ $active_page = "Administrators";
                                                         <th>Status</th>
                                                         <th>Created-By</th>
                                                         <th>Creation</th>
-                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="table_body_list">
