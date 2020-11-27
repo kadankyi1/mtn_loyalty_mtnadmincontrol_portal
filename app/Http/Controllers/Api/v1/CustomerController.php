@@ -369,7 +369,7 @@ public function make_redemption(Request $request)
     
 
     $points_to_one_cedi = DB::table('settings')
-    ->where("settings_id", "=", "points_to_one_cedi")
+    ->where("settings_id", "=", "pts_to_1_cedis_nc")
     ->first();
 
     if($points_to_one_cedi != null){
