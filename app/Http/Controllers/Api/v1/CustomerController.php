@@ -227,7 +227,7 @@ public function load_airtime(Request $request)
     
 
     $one_cedi_airtime_to_ten_point_rate = DB::table('settings')
-    ->where("settings_id", "=", "one_cedi_airtime_to_ten_point_rate")
+    ->where("settings_id", "=", "pts_to_1_cedis_nc")
     ->first();
 
     if($one_cedi_airtime_to_ten_point_rate != null){
@@ -401,7 +401,7 @@ public function make_redemption(Request $request)
     $redemption->save();
 
 
-    $message = "Redemption request successful. You voucher is " . $redemption_voucher;
+    $message = "Redemption successful. You got a Gh¢" . $redemption_amt . " Koala Shopping Center voucher (" . $redemption_voucher . ".) Present your voucher code to the vendor for payment";
 
     $where_array = array(
         ['customer_id', '=',  $customer->customer_id],
