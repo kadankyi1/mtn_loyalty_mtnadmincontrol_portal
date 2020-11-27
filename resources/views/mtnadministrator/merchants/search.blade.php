@@ -98,7 +98,7 @@ $active_page = "Merchants";
                                                 <span class="profile-info" id="merchant_email"></span>
                                             </div>
                                         </div>
-                                        <div class="row profile-row">
+                                        <div class="row profile-row" style="display: none">
                                             <div class="col-xs-5 col-sm-4">
                                                 <span class="profile-cat">Pending Claims</span>
                                             </div>
@@ -106,7 +106,7 @@ $active_page = "Merchants";
                                                 <span class="profile-info"  id="merchant_pending_claims"></span>
                                             </div>
                                         </div>
-                                        <div class="row profile-row">
+                                        <div class="row profile-row" style="display: none">
                                             <div class="col-xs-5 col-sm-4">
                                                 <span class="profile-cat">Balance</span>
                                             </div>
