@@ -387,6 +387,8 @@ public function make_redemption(Request $request)
     $customer->points = $customer->points - $request->points;
     $customer->save();
 
+    $redemption_voucher = strval(rand(33333333333333, 99999999999999));
+
     $redemption = new Redemption();
     $redemption->merchant_id = $validatedData["merchant_id"]; 
     $redemption->customer_id = $customer->customer_id; 
@@ -394,11 +396,12 @@ public function make_redemption(Request $request)
     $redemption->points_to_one_cedi_rate_used = $points_to_one_cedi; 
     $redemption->redeemed_points = $request->points; 
     $redemption->redemption_cedi_equivalent_paid = $redemption_amt; 
-    $redemption->vendor_paid_fiat = 0; 
+    $redemption->vendor_paid_fiat = 1; 
+    $redemption->redemption_code = $redemption_voucher; 
     $redemption->save();
 
 
-    $message = "Redemption request successful. You get Gh¢" . $redemption_amt . " for this redemption";
+    $message = "Redemption request successful. You voucher is " . $redemption_voucher;
 
     $where_array = array(
         ['customer_id', '=',  $customer->customer_id],
