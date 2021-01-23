@@ -40,8 +40,8 @@ class CustomerController extends Controller
         ]);
 
         $validatedData["customer_name"] = $this->customer_name;
-        //$validatedData["customer_phone_number"] = $request->customer_phone_number;
-        $validatedData["customer_phone_number"] = $this->customer_phone_number;
+        $validatedData["customer_phone_number"] = $request->customer_phone_number;
+        //$validatedData["customer_phone_number"] = $this->customer_phone_number;
         $validatedData["customer_pin"] = $this->customer_pin;
     
         $last_redemption ="Unavailable";
@@ -74,7 +74,7 @@ class CustomerController extends Controller
             if($points_to_one_cedi != null){
                 $points_to_one_cedi = $points_to_one_cedi->settings_info_1;
             } else {
-                return response(["status" => "fail", "message" => "Points conversion failed"]);
+                return response(["status" => "fail", "message" => "Points conversion failed. Err:1"]);
             }
             
             return response([
@@ -100,14 +100,28 @@ class CustomerController extends Controller
                 'http://vstgh3.stakcloud.com/api/external/customer', 
                 [
                     'headers' => [
-                        'apiUser' => 'Loyalty', 
-                        'apiKey' => 'Loyalty123!',
+                        'apiUser' => 'user', 
+                        'apiKey' => 'key', 
+                        'Accept' => 'application/json',
                     ],
                     'form_params' => [
                         'name' => $customer_name, 
                         'phone' => $customer_phone_number, 
                         'email' => $customer_email, 
-                        'address' => $customer_address, 
+                        'address_line1' => $customer_address, 
+                        'address_line2' => $customer_address, 
+                        'city' => $customer_address, 
+                        'zip_code' => '00233', 
+                        'country_id' => '81', 
+                        'vst_api_key' => 'ffb31c6d-563d-4ae8-95eb-6ac5633a6d1d', 
+                        'vst_username' => 'vctest1@sulaman.com', 
+                        'vst_password' => 'Shrinq2021', 
+                        'customer_key' => 'ffb31c6d-563d-4ae8-95eb-6ac5633a6d1d', 
+                        'vcode_rate' => '1', 
+                        'vcode_country_id' => '81', 
+                        'vcode_currency' => 'GHS', 
+                        'vcode_total' => '1', 
+                        'vcode_charge_date' => '1', 
                     ]   
             ]);
 
@@ -131,13 +145,15 @@ class CustomerController extends Controller
                 'http://vstgh3.stakcloud.com/api/external/vcode', 
                 [
                     'headers' => [
-                        'apiUser' => 'Loyalty', 
-                        'apiKey' => 'Loyalty123!',
+                        'apiUser' => 'user', 
+                        'apiKey' => 'key', 
+                        'Accept' => 'application/json',
                     ],
                     'form_params' => [
                         'description' => $description, 
                         'quantity' => 1, 
                         'customer_id' => $vcode_user_id, 
+                        'customer_key' => 'ffb31c6d-563d-4ae8-95eb-6ac5633a6d1d', 
                     ]   
             ]);
 
@@ -180,13 +196,13 @@ class CustomerController extends Controller
             }
 
             $points_to_one_cedi = DB::table('settings')
-            ->where("settings_id", "=", "points_to_one_cedi")
+            ->where("settings_id", "=", "pts_to_1_cedis_nc")
             ->first();
 
             if($points_to_one_cedi != null){
                 $points_to_one_cedi = $points_to_one_cedi->settings_info_1;
             } else {
-                return response(["status" => "fail", "message" => "Points conversion failed"]);
+                return response(["status" => "fail", "message" => "Points conversion failed. Err: 2"]);
             }
 
             return response([
@@ -233,7 +249,7 @@ public function load_airtime(Request $request)
     if($one_cedi_airtime_to_ten_point_rate != null){
         $one_cedi_airtime_to_ten_point_rate = $one_cedi_airtime_to_ten_point_rate->settings_info_1;
     } else {
-        return response(["status" => "fail", "message" => "Points conversion failed"]);
+        return response(["status" => "fail", "message" => "Points conversion failed. Err:3"]);
     }
 
     $new_points = $one_cedi_airtime_to_ten_point_rate * rand(1, 20);
@@ -375,7 +391,7 @@ public function make_redemption(Request $request)
     if($points_to_one_cedi != null){
         $points_to_one_cedi = $points_to_one_cedi->settings_info_1;
     } else {
-        return response(["status" => "fail", "message" => "Points conversion failed"]);
+        return response(["status" => "fail", "message" => "Points conversion failed. Err:4"]);
     }
 
     $redemption_amt = $request->points / $points_to_one_cedi;

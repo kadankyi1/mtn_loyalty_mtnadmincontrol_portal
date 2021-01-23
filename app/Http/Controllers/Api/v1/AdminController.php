@@ -407,6 +407,7 @@ public function add_merchant(Request $request)
 
     $merchant = Merchant::where('merchant_phone_number', $request->merchant_phone_number)->first();
 
+    
     if ($merchant != null && $merchant->merchant_phone_number == $request->merchant_phone_number) {
         return response(["status" => "fail", "message" => "The phone number is registered to another merchant."]);
     } else {
@@ -418,21 +419,35 @@ public function add_merchant(Request $request)
             'http://vstgh3.stakcloud.com/api/external/customer', 
             [
                 'headers' => [
-                    'apiUser' => 'Loyalty', 
-                    'apiKey' => 'Loyalty123!',
+                    'apiUser' => 'user', 
+                    'apiKey' => 'key', 
+                    'Accept' => 'application/json',
                 ],
                 'form_params' => [
                     'name' => $request->merchant_name, 
                     'phone' => $request->merchant_phone_number, 
                     'email' => $request->merchant_email, 
-                    'address' => $request->merchant_location, 
+                    'address_line1' => $request->merchant_location, 
+                    'address_line2' => $request->merchant_location, 
+                    'city' => $request->merchant_location, 
+                    'zip_code' => '00233', 
+                    'country_id' => '81', 
+                    'vst_api_key' => 'ffb31c6d-563d-4ae8-95eb-6ac5633a6d1d', 
+                    'vst_username' => 'vctest1@sulaman.com', 
+                    'vst_password' => 'Shrinq2021', 
+                    'customer_key' => 'ffb31c6d-563d-4ae8-95eb-6ac5633a6d1d', 
+                    'vcode_rate' => '1', 
+                    'vcode_country_id' => '81', 
+                    'vcode_currency' => 'GHS', 
+                    'vcode_total' => '1', 
+                    'vcode_charge_date' => '1', 
                 ]   
         ]);
-
 
         $statusCode = $response->getStatusCode();
         $contents = $response->getBody()->getContents();
         $contents = json_decode($contents,true);
+
 
         if($statusCode == 200 && isset($contents['data']['id']) && $contents['data']['id'] > 0){
             $vcode_user_id = $contents['data']['id'];
@@ -449,13 +464,15 @@ public function add_merchant(Request $request)
             'http://vstgh3.stakcloud.com/api/external/vcode', 
             [
                 'headers' => [
-                    'apiUser' => 'Loyalty', 
-                    'apiKey' => 'Loyalty123!',
+                    'apiUser' => 'user', 
+                    'apiKey' => 'key', 
+                    'Accept' => 'application/json',
                 ],
                 'form_params' => [
                     'description' => $description, 
                     'quantity' => 1, 
                     'customer_id' => $vcode_user_id, 
+                    'customer_key' => 'ffb31c6d-563d-4ae8-95eb-6ac5633a6d1d', 
                 ]   
         ]);
 
