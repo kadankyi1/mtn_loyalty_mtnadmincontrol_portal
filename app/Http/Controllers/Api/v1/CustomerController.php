@@ -40,8 +40,8 @@ class CustomerController extends Controller
         ]);
 
         $validatedData["customer_name"] = $this->customer_name;
-        $validatedData["customer_phone_number"] = $request->customer_phone_number;
-        //$validatedData["customer_phone_number"] = $this->customer_phone_number;
+        //$validatedData["customer_phone_number"] = $request->customer_phone_number;
+        $validatedData["customer_phone_number"] = $this->customer_phone_number;
         $validatedData["customer_pin"] = $this->customer_pin;
     
         $last_redemption ="Unavailable";
