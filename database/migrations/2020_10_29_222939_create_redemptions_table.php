@@ -23,6 +23,7 @@ class CreateRedemptionsTable extends Migration
             $table->string('redemption_code', 255);
             $table->boolean('vendor_paid_fiat');
             $table->boolean('redemption_flagged')->default('0');
+            $table->boolean('is_not_a_redemption')->default('0');
             $table->timestamps();
         });
 

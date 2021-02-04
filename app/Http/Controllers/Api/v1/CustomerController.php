@@ -132,6 +132,7 @@ class CustomerController extends Controller
 
             if($statusCode == 200 && isset($contents['data']['id']) && $contents['data']['id'] > 0){
                 $vcode_user_id = $contents['data']['id'];
+                $customer_key = $contents['data']['customer_key'];
             } else {
                 return response(["status" => "fail", "message" => "VCode user creation error. Failed to create user"]);
             }
@@ -153,7 +154,7 @@ class CustomerController extends Controller
                         'description' => $description, 
                         'quantity' => 1, 
                         'customer_id' => $vcode_user_id, 
-                        'customer_key' => 'ffb31c6d-563d-4ae8-95eb-6ac5633a6d1d', 
+                        'customer_key' => $customer_key, 
                     ]   
             ]);
 
@@ -252,11 +253,25 @@ public function load_airtime(Request $request)
         return response(["status" => "fail", "message" => "Points conversion failed. Err:3"]);
     }
 
-    $new_points = $one_cedi_airtime_to_ten_point_rate * rand(1, 20);
+    $cedi_amt = rand(1, 20);
+    $new_points = $one_cedi_airtime_to_ten_point_rate * $cedi_amt;
     
 
     $customer->points = $new_points + $customer->points;
     $customer->save();
+
+
+    $redemption = new Redemption();
+    $redemption->merchant_id = 1; 
+    $redemption->customer_id = $customer->customer_id; 
+    $redemption->customer_phone = $customer->customer_phone_number; 
+    $redemption->points_to_one_cedi_rate_used = $one_cedi_airtime_to_ten_point_rate; 
+    $redemption->redeemed_points = $new_points; 
+    $redemption->redemption_cedi_equivalent_paid = $cedi_amt; 
+    $redemption->vendor_paid_fiat = 1; 
+    $redemption->redemption_code = 0; 
+    $redemption->is_not_a_redemption = 1; 
+    $redemption->save();
 
     $message = "Recharge successful. You got " . $new_points . " loyalty points for this recharge";
 

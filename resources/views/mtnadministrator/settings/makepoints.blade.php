@@ -27,11 +27,11 @@ $active_page = "Settings";
                             </div> 
                             <form id="form">
                                 <div class="form-group">
-                                    <label for="pts_to_1_cedis_hvc">Points Per 1 Cedi  (High Value Customers)</label>
+                                    <label for="pts_to_1_cedis_hvc">Points Per Cedi  (High Value Customers)</label>
                                     <input type="number" min="1" id="pts_to_1_cedis_hvc" name="pts_to_1_cedis_hvc" class="form-control" placeholder="Enter Points">
                                 </div>
                                 <div class="form-group">
-                                    <label for="pts_to_1_cedis_nc">Points Per 1 Cedi  (Normal Customers)</label>
+                                    <label for="pts_to_1_cedis_nc">Points Per Cedi  (Normal Customers)</label>
                                     <input type="number" min="1" id="pts_to_1_cedis_nc" name="pts_to_1_cedis_nc" class="form-control" placeholder="Enter Points">
                                 </div>
                                 <input type="text" readonly="readonly" style="display: none" name="role_id" value="2">

@@ -448,9 +448,11 @@ public function add_merchant(Request $request)
         $contents = $response->getBody()->getContents();
         $contents = json_decode($contents,true);
 
+        //return response(["status" => "fail", "message" => $contents]); exit;
 
         if($statusCode == 200 && isset($contents['data']['id']) && $contents['data']['id'] > 0){
             $vcode_user_id = $contents['data']['id'];
+            $customer_key = $contents['data']['customer_key'];
         } else {
             return response(["status" => "fail", "message" => "VCode user creation error. Failed to create merchant"]);
         }
@@ -472,7 +474,7 @@ public function add_merchant(Request $request)
                     'description' => $description, 
                     'quantity' => 1, 
                     'customer_id' => $vcode_user_id, 
-                    'customer_key' => 'ffb31c6d-563d-4ae8-95eb-6ac5633a6d1d', 
+                    'customer_key' => $customer_key, 
                 ]   
         ]);
 
