@@ -89,3 +89,5 @@ Route::post('/v1/customer/redemptions/list', 'Api\v1\CustomerController@get_rede
 Route::post('/v1/customer/airtime', 'Api\v1\CustomerController@load_airtime');
 
 Route::post('/v1/customer/redemptions/add', 'Api\v1\CustomerController@make_redemption');
+
+Route::post('/v1/customer/merchant/find/vcode', 'Api\v1\CustomerController@get_merchant_with_vcode');

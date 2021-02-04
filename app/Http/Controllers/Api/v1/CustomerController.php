@@ -375,12 +375,13 @@ public function make_redemption(Request $request)
         "customer_phone_number" => "max:55",
         "points" => "bail|required|numeric",
         "customer_pin" => "max:55",
+        "merchant_id" => "bail|required",
     ]);
 
     $validatedData["customer_name"] = $this->customer_name;
     $validatedData["customer_phone_number"] = $this->customer_phone_number;
     $validatedData["customer_pin"] = $this->customer_pin;
-    $validatedData["merchant_id"] = $this->merchant_id;
+    $validatedData["merchant_id"] = $request->merchant_id;
 
     $last_redemption ="Unavailable";
     $customer = Customer::where('customer_phone_number', $validatedData["customer_phone_number"])->first();
@@ -395,17 +396,15 @@ public function make_redemption(Request $request)
         return response(["status" => "fail", "message" => "Merchant not found"]);
     }
 
-    /**********  AIRTIME TO CEDIS ************ */
-    
 
     $points_to_one_cedi = DB::table('settings')
     ->where("settings_id", "=", "pts_to_1_cedis_nc")
     ->first();
 
-    if($points_to_one_cedi != null){
-        $points_to_one_cedi = $points_to_one_cedi->settings_info_1;
+    if($merchant->pts_to_1_cedis_nc > 0){
+        $points_to_one_cedi = $merchant->pts_to_1_cedis_nc;
     } else {
-        return response(["status" => "fail", "message" => "Points conversion failed. Err:4"]);
+        return response(["status" => "fail", "message" => "Merchant points conversion failed. Err:4"]);
     }
 
     $redemption_amt = $request->points / $points_to_one_cedi;
@@ -431,7 +430,7 @@ public function make_redemption(Request $request)
     $redemption->save();
 
 
-    $message = "Redemption successful. You got a Gh¢" . $redemption_amt . " Koala Shopping Center voucher (" . $redemption_voucher . ".) Present your voucher code to the vendor for payment";
+    $message = "Redemption successful. You got a Gh¢" . $redemption_amt . " " . $merchant->merchant_name . " voucher (" . $redemption_voucher . ".) Present your voucher code to the vendor as payment";
 
     $where_array = array(
         ['customer_id', '=',  $customer->customer_id],
@@ -458,6 +457,46 @@ public function make_redemption(Request $request)
 
     
 }
+
+
+
+/*
+|--------------------------------------------------------------------------
+|--------------------------------------------------------------------------
+| THIS FUNCTION GETS SEARCHES FOR A LIST OF BUREAUS
+|--------------------------------------------------------------------------
+|--------------------------------------------------------------------------
+|
+*/
+public function get_merchant_with_vcode(Request $request)
+{
+
+    $login_data = $request->validate([
+        "merchant_vcode" => "string",
+    ]);
+
+    $where_array = array(
+        ['merchant_vcode', '=',  $request->merchant_vcode],
+    ); 
+
+    $merchants = DB::table('merchants')
+    ->select('merchants.*')
+    ->where($where_array)
+    ->get();
+
+    if(isset($merchants[0]) && $merchants[0]->merchant_id > 0){
+        return response([
+            "status" => "success", 
+            "message" => "Merchant found", 
+            "merchant" => $merchants[0]
+            ]);
+    } else {
+        return response(["status" => "fail", "message" => "Merchant not found"]);
+    }
+
+
+}
+
 
     
 }

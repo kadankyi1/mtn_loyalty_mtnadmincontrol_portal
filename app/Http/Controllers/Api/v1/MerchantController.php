@@ -411,7 +411,4 @@ public function make_claim(Request $request)
 }
 
 
-
-
-
 }
