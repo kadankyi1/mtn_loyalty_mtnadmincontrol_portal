@@ -252,7 +252,8 @@ public function load_airtime(Request $request)
         return response(["status" => "fail", "message" => "Points conversion failed. Err:3"]);
     }
 
-    $cedi_amt = rand(1, 20);
+    //$cedi_amt = rand(1, 20);
+    $cedi_amt = 10;
     $new_points = $one_cedi_airtime_to_ten_point_rate * $cedi_amt;
     
 
