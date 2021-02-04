@@ -25,7 +25,7 @@ class CustomerController extends Controller
 
     public $customer_name = "Dankyi Anno Kwaku";
     //public $customer_phone_number = "0540000020";
-    public $customer_phone_number = "0540000028";
+    public $customer_phone_number = "0540000035";
     public $customer_pin = "1234";
     public $merchant_id = 1;
 
