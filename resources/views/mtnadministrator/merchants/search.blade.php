@@ -147,6 +147,14 @@ $active_page = "Merchants";
                                                 <span class="profile-info" id="admin_name"></span>
                                             </div>
                                         </div>
+                                        <div class="row profile-row">
+                                            <div class="col-xs-5 col-sm-4">
+                                                <span class="profile-cat">Token API<br></span>
+                                            </div>
+                                            <div class="col-xl-7 col-sm-8">
+                                                <span class="profile-info">https://merchantwebsite.com/gettoken</span>
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
