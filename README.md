@@ -31,6 +31,6 @@ Available soon on the MTN App .
 </br>
 ## Authors
 
-* **Dankyi Anno Kwaku** - *ShrinQ Company Limited*
+* **Dankyi Anno Kwaku**
 
 
