@@ -29,7 +29,8 @@ Available soon on the MTN App .
 </table>
   </div>
 </br>
-## Authors
+
+### Author
 
 * **Dankyi Anno Kwaku**
 
